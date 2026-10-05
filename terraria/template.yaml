@@ -90,14 +90,6 @@ spec:
       image: passivelemon/terraria-docker:tmodloader-latest-pre  # gameplane:floating
       loader: tmodloader
 
-  probes:
-    readiness:
-      tcpSocket:
-        port: game
-      initialDelaySeconds: 30
-      periodSeconds: 10
-      failureThreshold: 30
-
   capabilities:
     lifecycle:
       stop: ["exit"]

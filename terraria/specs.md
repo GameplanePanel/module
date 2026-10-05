@@ -74,7 +74,7 @@ Declared ports under `spec.ports`:
 ## 8. Key Invariants & Security
 
 - **Network Wake Protocol**: Declares `wakeProtocol: terraria` under `spec.ports[game]` to allow wake-on-traffic.
-- **Readiness Probe**: Uses TCP socket probe against port `7777`.
+- **No Readiness Probe**: The template declares no probe. The server crashes (`ObjectDisposedException` in `Netplay.ServerLoop`) when a client connects and closes at once, which is exactly what a kubelet `tcpSocket` probe does, so a TCP probe crash-loops the pod.
 
 ---
 

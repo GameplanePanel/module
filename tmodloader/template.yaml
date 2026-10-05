@@ -53,14 +53,6 @@ spec:
 
   consoleMode: pty
 
-  probes:
-    readiness:
-      tcpSocket:
-        port: game
-      initialDelaySeconds: 30
-      periodSeconds: 10
-      failureThreshold: 30
-
   capabilities:
     lifecycle:
       stop: ["exit"]
