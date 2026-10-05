@@ -28,7 +28,7 @@ spec:
   displayName: Nuclear Option
   game: nuclear-option
   # Kept in lockstep with module.yaml's bundle version.
-  version: 1.0.0
+  version: 1.0.1
   categories: [Simulation, PvP]
   # Brand color for the dashboard.
   accentColor: "#ff6b6b"
