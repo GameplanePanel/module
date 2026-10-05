@@ -381,6 +381,7 @@ spec:
             enum: ["peaceful", "easy", "normal", "hard"]
             default: normal
             required: true
+            currentFrom: difficulty
       # whitelist-add / whitelist-remove were removed here — whitelist
       # management now lives solely on the Players tab
       # (capabilities.players.whitelist above), so quick actions don't
