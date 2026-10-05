@@ -18,7 +18,7 @@ metadata:
 spec:
   displayName: tModLoader
   game: tmodloader
-  version: 1.0.0
+  version: 1.0.2
   categories: [Sandbox, Survival, Adventure, Modded]
   accentColor: "#10b981"
   description: |
