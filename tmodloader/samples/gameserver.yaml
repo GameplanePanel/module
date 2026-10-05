@@ -13,7 +13,6 @@ spec:
     DIFFICULTY: "1"
     MAXPLAYERS: "8"
     MOTD: "Welcome to Gameplane tModLoader Server"
-    MODPACK: ""
 
   networking:
     expose: NodePort

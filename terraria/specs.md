@@ -45,6 +45,7 @@ Declared ports under `spec.ports`:
 
 - **Protocol**: `none`
 - **Console Mode**: `pty`
+- **Console Bridge**: The start wrapper forwards pty lines to the game's tmux session with `tmux send-keys -l` (as `PUID:PGID` via gosu/su-exec) and forwards SIGTERM to the entrypoint.
 - **Authentication**: N/A (interactive stdin/stdout console).
 - **Command Support**: Standard Terraria CLI commands (`say`, `save`, `kick`, `ban`, `settle`, `motd`, `dawn`, `noon`, `dusk`, `midnight`).
 

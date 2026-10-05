@@ -2,7 +2,7 @@
 apiVersion: gameplane.local/module/v1
 name: tmodloader
 displayName: tModLoader
-version: 1.0.1
+version: 1.0.2
 game: tmodloader
 categories: [Sandbox, Survival, Adventure, Modded]
 summary: tModLoader dedicated server for modded Terraria gameplay with PTY console, .tmod mod manager, and world saves.

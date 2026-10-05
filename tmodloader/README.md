@@ -12,11 +12,11 @@ kubectl apply -f modules/tmodloader/template.yaml
 
 ## Mod Management
 
-tModLoader mods (`.tmod`) and modpacks are managed through the **Mods** tab. Mod files are stored under `/root/.local/share/Terraria/tModLoader/Mods`. Installs are allowed from GitHub release archives (max 512 MiB).
+A fresh server starts the built-in empty `vanilla` modpack (no mods). The **Mods** tab manages `.tmod` files in that pack, under `/opt/terraria/config/ModPacks/vanilla/Mods`; a mod loads once its name is listed in that folder's `enabled.json`. To run another modpack, put it under `/opt/terraria/config/ModPacks/<name>/Mods` (with its `enabled.json`) and set **Active modpack** (`MODPACK`) to `<name>`. Installs are allowed from GitHub release archives (max 512 MiB).
 
 ## Console (PTY)
 
-Terraria engines do not provide an RCON TCP port. The **Console** tab attaches directly to the container's stdin/stdout (pty) using the kubelet pod-attach API. Stop sequence issues `exit` to trigger world flushing before shutdown.
+Terraria engines do not provide an RCON TCP port. The **Console** tab attaches directly to the container's stdin/stdout (pty) using the kubelet pod-attach API. Stop sequence issues `exit` to trigger world flushing before shutdown. The image runs the server inside a detached tmux session, so the template's start wrapper forwards each console line into that session.
 
 ## Ports
 
@@ -26,10 +26,10 @@ Terraria engines do not provide an RCON TCP port. The **Console** tab attaches d
 
 ## Storage
 
-Storage is mounted at `/root/.local/share/Terraria/tModLoader` (4 GiB default), holding:
+Storage is mounted at `/opt/terraria/config` (4 GiB default), holding:
 - World files (`Worlds/`)
-- Installed mods (`Mods/`)
-- Mod configurations and loadouts
+- Modpacks (`ModPacks/<name>/Mods/`, including the default `vanilla` pack)
+- The generated `serverconfig.txt`
 
 ## Sample
 

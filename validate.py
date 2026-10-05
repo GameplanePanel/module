@@ -1026,6 +1026,31 @@ def rule_credential_fields_must_be_password(spec: dict) -> list[Finding]:
     return findings
 
 
+def rule_template_version_matches_module(spec: dict, module_version: str | None, template_path: Path) -> list[Finding]:
+    """Rule 11: GameTemplate spec.version must match module.yaml version.
+
+    Historical bug: minecraft-java template.yaml had spec.version 2.8.1 while
+    module.yaml was 2.9.0, causing the wizard to display an outdated version.
+    The template must stay in lockstep with the module's declared version.
+    """
+    if module_version is None:
+        return []
+
+    spec_version = spec.get("version", "")
+    if spec_version == module_version:
+        return []
+
+    return [
+        Finding(
+            ERROR,
+            "template-version-drift",
+            f"{template_path.name}: spec.version={spec_version!r} but module.yaml version={module_version!r} — "
+            "these must match exactly (template versions say 'lockstep'). Update template spec.version to "
+            f"{module_version!r}.",
+        )
+    ]
+
+
 LAYOUT_ENFORCED_MODULES = {
     "cs2",
     "palworld",
@@ -1103,7 +1128,7 @@ def collect_image_refs(spec: dict) -> list[str]:
     return out
 
 
-def validate_module(spec: dict, cache: dict[str, dict]) -> list[Finding]:
+def validate_module(spec: dict, cache: dict[str, dict], module_dir: Path | None = None) -> list[Finding]:
     findings: list[Finding] = []
     image_refs = collect_image_refs(spec)
     if not image_refs:
@@ -1129,6 +1154,19 @@ def validate_module(spec: dict, cache: dict[str, dict]) -> list[Finding]:
     findings += rule_mods_loaders_requires_versions(spec)
     findings += rule_credential_fields_must_be_password(spec)
     findings += rule_images_pinned(spec)
+
+    # Check template version matches module.yaml if we have the module dir
+    if module_dir:
+        module_yaml_path = module_dir / "module.yaml"
+        if module_yaml_path.exists():
+            try:
+                module_doc = yaml.safe_load(module_yaml_path.read_text())
+                module_version = (module_doc or {}).get("version")
+                template_path = module_dir / "template.yaml"
+                findings += rule_template_version_matches_module(spec, module_version, template_path)
+            except yaml.YAMLError:
+                pass  # module.yaml parse error already reported elsewhere if relevant
+
     return findings
 
 
@@ -1348,7 +1386,7 @@ Options:
             continue
         spec = (doc or {}).get("spec") or {}
 
-        findings = rule_directory_layout(module_dir) + validate_module(spec, cache)
+        findings = rule_directory_layout(module_dir) + validate_module(spec, cache, module_dir)
         if module_dir.name in offline_findings:
             findings.extend(offline_findings[module_dir.name])
         print(f"== {module_dir.name} ==")

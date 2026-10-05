@@ -18,7 +18,7 @@ override) or add an entry to `spec.versions`.
 tModLoader servers get a **Mods** tab that manages modpacks under
 `/opt/terraria/config/ModPacks` — its own per-(version+loader) volume, so
 each tModLoader build keeps its own set. Select the active modpack with the
-**Active modpack** (`MODPACK`) config field. Vanilla Terraria has no mods, so
+**Active modpack** (`MODPACK`) config field; left blank, tModLoader servers start a built-in empty `vanilla` pack. Vanilla Terraria has no mods, so
 the tab is hidden for vanilla servers. Installs are allowed from GitHub
 (max 512 MiB), subject to the agent's SSRF guard.
 
@@ -36,7 +36,8 @@ offered.
 ## Console
 
 No RCON. The **Console** tab attaches to the container's stdin/stdout (pty) —
-type `help` for the command list.
+type `help` for the command list. The image runs the server inside a detached tmux session, so the
+template's start wrapper forwards each console line into that session; the Stop button's `exit` saves the world and stops within seconds.
 
 ## Ports
 
