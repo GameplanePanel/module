@@ -1027,7 +1027,7 @@ def rule_credential_fields_must_be_password(spec: dict) -> list[Finding]:
 
 
 def rule_template_version_matches_module(spec: dict, module_version: str | None, template_path: Path) -> list[Finding]:
-    """Rule 10: GameTemplate spec.version must match module.yaml version.
+    """Rule 11: GameTemplate spec.version must match module.yaml version.
 
     Historical bug: minecraft-java template.yaml had spec.version 2.8.1 while
     module.yaml was 2.9.0, causing the wizard to display an outdated version.
