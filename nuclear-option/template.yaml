@@ -166,12 +166,9 @@ spec:
       list:
         command: "get-player-list"
         entryRegex: '"steamId":\s*"(?P<name>[^"]*)"'
-      kick:
-        command: "kick-player {{.Player}}"
-      ban:
-        command: "banlist-add {{.Player}}"
-      unban:
-        command: "banlist-remove {{.Player}}"
+      kick: "kick-player {{.Player}}"
+      ban: "banlist-add {{.Player}}"
+      unban: "banlist-remove {{.Player}}"
       # Note: the server returns 2000 (success) for kick/ban/unban even when
       # the Steam ID is not present, so the agent cannot distinguish a
       # successful moderation from a silent no-op.
