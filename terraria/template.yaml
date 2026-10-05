@@ -92,8 +92,11 @@ spec:
 
   probes:
     readiness:
-      tcpSocket:
-        port: game
+      # Ready once the server LISTENs on 7777 (0x1E61 in /proc/net/tcp). Never
+      # tcpSocket: the kubelet's connect-and-close crashes the server
+      # (ObjectDisposedException in Netplay.ServerLoop) and crash-loops the pod.
+      exec:
+        command: ["sh", "-c", "grep -qsE ':1E61 [0-9A-F]+:[0-9A-F]{4} 0A' /proc/net/tcp /proc/net/tcp6"]
       initialDelaySeconds: 30
       periodSeconds: 10
       failureThreshold: 30

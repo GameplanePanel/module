@@ -73,7 +73,7 @@ Declared ports under `spec.ports`:
 ## 8. Key Invariants & Security
 
 - **Wake-On-Traffic**: Declares `wakeProtocol: terraria` under `spec.ports[game]`.
-- **Readiness Probe**: Uses TCP probe on port `7777`.
+- **Readiness Probe**: The same `exec` probe as vanilla Terraria: it reads `/proc/net/tcp` for a socket listening on port `7777` (`0x1E61`) instead of connecting, because a `tcpSocket` probe's connect-and-close crashes the server (`ObjectDisposedException` in `Netplay.ServerLoop`).
 
 ---
 
