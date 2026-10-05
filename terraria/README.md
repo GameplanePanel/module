@@ -36,7 +36,8 @@ offered.
 ## Console
 
 No RCON. The **Console** tab attaches to the container's stdin/stdout (pty) —
-type `help` for the command list.
+type `help` for the command list. The image runs the server inside a detached tmux session, so the
+template's start wrapper forwards each console line into that session; the Stop button's `exit` saves the world and stops within seconds.
 
 ## Ports
 

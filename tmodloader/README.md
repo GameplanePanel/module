@@ -16,7 +16,7 @@ A fresh server starts the built-in empty `vanilla` modpack (no mods). The **Mods
 
 ## Console (PTY)
 
-Terraria engines do not provide an RCON TCP port. The **Console** tab attaches directly to the container's stdin/stdout (pty) using the kubelet pod-attach API. Stop sequence issues `exit` to trigger world flushing before shutdown.
+Terraria engines do not provide an RCON TCP port. The **Console** tab attaches directly to the container's stdin/stdout (pty) using the kubelet pod-attach API. Stop sequence issues `exit` to trigger world flushing before shutdown. The image runs the server inside a detached tmux session, so the template's start wrapper forwards each console line into that session.
 
 ## Ports
 

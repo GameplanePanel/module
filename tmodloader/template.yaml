@@ -34,11 +34,16 @@ spec:
   # passivelemon's tModLoader scripts exit when MODPACK is blank or its
   # ModPacks/<pack>/Mods/enabled.json is missing. On tModLoader images
   # (GP_LOADER=tmodloader) a blank MODPACK selects a built-in empty "vanilla"
-  # pack, created on first start and never overwritten; then the image's own
-  # entrypoint runs as before.
+  # pack, created on first start and never overwritten. The image runs the
+  # game in a detached tmux session that never reads container stdin, so the
+  # wrapper also bridges the console: each line from the pty is sent to the
+  # game with tmux send-keys (as the game user), and SIGTERM is forwarded to
+  # the entrypoint so its save-and-exit trap still runs.
   command: ["/bin/sh", "-c"]
   args:
     - |
+      pid=
+      trap 'if [ -n "$pid" ]; then kill -TERM "$pid" 2>/dev/null; else exit 143; fi' TERM
       if [ "${GP_LOADER:-}" = "tmodloader" ]; then
         : "${MODPACK:=vanilla}"; export MODPACK
         if [ "$MODPACK" = "vanilla" ]; then
@@ -46,7 +51,37 @@ spec:
           [ -e /opt/terraria/config/ModPacks/vanilla/Mods/enabled.json ] || printf '[]\n' > /opt/terraria/config/ModPacks/vanilla/Mods/enabled.json
         fi
       fi
-      exec /opt/terraria/entrypoint.sh
+      /opt/terraria/entrypoint.sh &
+      pid=$!
+      rpid=
+      if [ -t 0 ]; then
+        exec 3<&0
+        (
+          cr=$(printf '\r')
+          as=
+          if [ "$(id -u)" = 0 ]; then
+            if command -v gosu >/dev/null 2>&1; then as="gosu"; else as="su-exec"; fi
+            as="$as ${PUID:-1000}:${PGID:-1000}"
+          fi
+          while :; do
+            while IFS= read -r line <&3; do
+              line=${line%"$cr"}
+              [ -n "$line" ] || continue
+              if ! { $as /usr/bin/tmux send-keys -l -- "$line" && $as /usr/bin/tmux send-keys Enter; } 2>/dev/null; then
+                echo "[gameplane] console not ready; input ignored"
+              fi
+            done
+            sleep 1
+          done
+        ) &
+        rpid=$!
+      fi
+      while :; do
+        wait "$pid"; rc=$?
+        kill -0 "$pid" 2>/dev/null || break
+      done
+      [ -z "$rpid" ] || kill "$rpid" 2>/dev/null
+      exit "$rc"
 
   security:
     fsGroup: 1000

@@ -44,6 +44,7 @@ Declared ports under `spec.ports`:
 
 - **Protocol**: `none`
 - **Console Mode**: `pty`
+- **Console Bridge**: The start wrapper forwards pty lines to the game's tmux session with `tmux send-keys -l` (as `PUID:PGID` via gosu/su-exec) and forwards SIGTERM to the entrypoint.
 - **Authentication**: N/A (interactive terminal console).
 - **Command Support**: Standard Terraria and tModLoader CLI commands (`say`, `save`, `exit`, mod reload commands).
 
