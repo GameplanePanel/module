@@ -18,7 +18,7 @@ override) or add an entry to `spec.versions`.
 tModLoader servers get a **Mods** tab that manages modpacks under
 `/opt/terraria/config/ModPacks` — its own per-(version+loader) volume, so
 each tModLoader build keeps its own set. Select the active modpack with the
-**Active modpack** (`MODPACK`) config field. Vanilla Terraria has no mods, so
+**Active modpack** (`MODPACK`) config field; left blank, tModLoader servers start a built-in empty `vanilla` pack. Vanilla Terraria has no mods, so
 the tab is hidden for vanilla servers. Installs are allowed from GitHub
 (max 512 MiB), subject to the agent's SSRF guard.
 

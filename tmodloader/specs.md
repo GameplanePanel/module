@@ -14,7 +14,7 @@
 - **Base Image**: `passivelemon/terraria-docker:tmodloader-latest@sha256:3f2d8703421159f1037084bd2c0901a3a63b85a00801cf36f6f928e8b666b44e`
 - **Architecture**: `linux/amd64`
 - **Runtime Model**: .NET 6 runtime host running `tModLoader.dll` with integrated mono/native runtime dependencies.
-- **User & Execution Context**: Root container execution (`/`).
+- **User & Execution Context**: Starts as root; a small wrapper picks the default `vanilla` modpack when `MODPACK` is blank, then the image entrypoint drops to the `terraria` user (uid/gid 1000) via su-exec.
 
 ---
 
@@ -30,7 +30,7 @@ Declared ports under `spec.ports`:
 
 ## 4. Storage & Persistence Layout
 
-- **Mount Path**: `/root/.local/share/Terraria/tModLoader`
+- **Mount Path**: `/opt/terraria/config`
 - **Default Sizing**: `4Gi`
 - **Persisted Content**:
   - Generated modded worlds (`Worlds/*.wld`)

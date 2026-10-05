@@ -3,7 +3,8 @@
 #
 # Backed by passivelemon/terraria-docker:tmodloader-latest. Dedicated server
 # running the tModLoader .NET 6 modding framework for Terraria. Console
-# attaches to container stdin (pty); no RCON.
+# attaches to container stdin (pty); no RCON. A blank MODPACK starts the
+# built-in empty "vanilla" modpack (see the command wrapper below).
 #
 # Cluster-scoped; apply once per cluster:
 #     kubectl apply -f modules/tmodloader/template.yaml
@@ -26,6 +27,27 @@ spec:
 
   image: passivelemon/terraria-docker:tmodloader-latest@sha256:3f2d8703421159f1037084bd2c0901a3a63b85a00801cf36f6f928e8b666b44e
 
+  env:
+    - name: GP_LOADER
+      value: tmodloader
+
+  # passivelemon's tModLoader scripts exit when MODPACK is blank or its
+  # ModPacks/<pack>/Mods/enabled.json is missing. On tModLoader images
+  # (GP_LOADER=tmodloader) a blank MODPACK selects a built-in empty "vanilla"
+  # pack, created on first start and never overwritten; then the image's own
+  # entrypoint runs as before.
+  command: ["/bin/sh", "-c"]
+  args:
+    - |
+      if [ "${GP_LOADER:-}" = "tmodloader" ]; then
+        : "${MODPACK:=vanilla}"; export MODPACK
+        if [ "$MODPACK" = "vanilla" ]; then
+          mkdir -p /opt/terraria/config/ModPacks/vanilla/Mods
+          [ -e /opt/terraria/config/ModPacks/vanilla/Mods/enabled.json ] || printf '[]\n' > /opt/terraria/config/ModPacks/vanilla/Mods/enabled.json
+        fi
+      fi
+      exec /opt/terraria/entrypoint.sh
+
   security:
     fsGroup: 1000
 
@@ -38,7 +60,7 @@ spec:
 
   storage:
     size: 4Gi
-    mountPath: /root/.local/share/Terraria/tModLoader
+    mountPath: /opt/terraria/config
 
   resources:
     requests:
@@ -84,7 +106,7 @@ spec:
         transport: stdin
         command: "save"
     mods:
-      path: Mods
+      path: ModPacks/vanilla/Mods
       extensions: [".tmod", ".zip"]
       install:
         allowedHosts:
@@ -124,6 +146,6 @@ spec:
       default: "Welcome to Gameplane tModLoader Server"
     - name: MODPACK
       displayName: Active modpack
-      description: Active modpack name under ModPacks. Leave blank for none.
+      description: Active modpack folder name under ModPacks. Leave blank for the built-in empty "vanilla" pack.
       type: string
       default: ""
