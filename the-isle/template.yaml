@@ -17,7 +17,7 @@ spec:
   displayName: The Isle
   game: the-isle
   version: 1.0.0
-  categories: [Survival, Dinosaur, Open World, Multiplayer]
+  categories: [Survival, Dinosaurs, Open World, Multiplayer]
   accentColor: "#22543d"
   description: |
     The Isle dedicated multiplayer server running on Unreal Engine.
