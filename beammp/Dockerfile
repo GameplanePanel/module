@@ -3,7 +3,7 @@ FROM alpine:3.20
 LABEL org.opencontainers.image.title="Gameplane BeamMP Dedicated Server" \
       org.opencontainers.image.description="Dedicated server container for BeamNG.drive (BeamMP) with diagnostic idle support for missing auth keys" \
       org.opencontainers.image.authors="Gameplane Maintainers" \
-      org.opencontainers.image.source="https://github.com/ValgulNecron/gameplane"
+      org.opencontainers.image.source="https://github.com/GameplanePanel/Gameplane"
 
 RUN apk add --no-cache \
     bash \

@@ -7,7 +7,7 @@
 # layer by its filename annotation.
 #
 # Usage:
-#   modules/build.sh push --registry ghcr.io/valgulnecron/gameplane-modules
+#   modules/build.sh push --registry ghcr.io/gameplanepanel/gameplane-modules
 #   modules/build.sh push --registry localhost:5001 --name minecraft-java --insecure
 #   modules/build.sh push --registry $REG --plain-http   # all modules, plain-http
 #
@@ -31,7 +31,7 @@ usage() {
 Usage: $0 push [flags]
 
 Flags:
-  --registry <ref>   Registry/repo prefix (e.g. ghcr.io/valgulnecron/gameplane-modules)   [required]
+  --registry <ref>   Registry/repo prefix (e.g. ghcr.io/gameplanepanel/gameplane-modules)   [required]
   --name <name>      Push only this module (defaults: every dir under modules/)
   --plain-http       Use plain HTTP (for local kind registries)
   --insecure         Skip TLS verification

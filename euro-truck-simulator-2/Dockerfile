@@ -3,7 +3,7 @@ FROM debian:bookworm-slim
 LABEL org.opencontainers.image.title="Gameplane Euro Truck Simulator 2 Dedicated Server" \
       org.opencontainers.image.description="Dedicated server container for Euro Truck Simulator 2 with diagnostic idle support for missing logon tokens" \
       org.opencontainers.image.authors="Gameplane Maintainers" \
-      org.opencontainers.image.source="https://github.com/ValgulNecron/gameplane"
+      org.opencontainers.image.source="https://github.com/GameplanePanel/Gameplane"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
