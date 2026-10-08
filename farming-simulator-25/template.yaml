@@ -25,7 +25,7 @@ spec:
     an integrated web management portal. Remote control and state management
     use the web portal REST API.
 
-  image: ghcr.io/gameplanepanel/gameplane/farming-simulator-25:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/valgulnecron/gameplane/farming-simulator-25:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
   env:
     - name: HOME

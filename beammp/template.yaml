@@ -24,7 +24,7 @@ spec:
     Interactive console connects via container PTY stdin/stdout. Mods and
     custom vehicle/map packages install into the Resources directory.
 
-  image: ghcr.io/gameplanepanel/gameplane/beammp:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/valgulnecron/gameplane/beammp:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
   env:
     - name: HOME

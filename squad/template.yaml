@@ -24,12 +24,12 @@ spec:
     console moderation, map rotation, and server administration on TCP port 21114.
     Server configuration and match logs persist under `/serverdata/Squad/Saved`.
 
-  image: ghcr.io/gameplanepanel/gameplane/squad:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/valgulnecron/gameplane/squad:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
   versions:
     - id: latest
       displayName: "Latest (UE4)"
-      image: ghcr.io/gameplanepanel/gameplane/squad:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/valgulnecron/gameplane/squad:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
       default: true
 
   env:

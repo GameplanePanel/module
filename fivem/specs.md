@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/gameplanepanel/gameplane/fivem:latest`
+- **Base Image**: `ghcr.io/valgulnecron/gameplane/fivem:latest`
 - **Architecture**: `linux/amd64`
 - **Runtime Model**: CitizenFX server supervised alongside embedded MariaDB and txAdmin in a single-pod architecture (FR-012).
 - **User & Execution Context**: UID `1000`, GID `1000`, working directory `/server-data`.

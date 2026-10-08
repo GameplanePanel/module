@@ -24,12 +24,12 @@ spec:
     Source RCON powers remote console administration on port 8888 TCP;
     saves and server configurations persist under `TheIsle/Saved`.
 
-  image: ghcr.io/gameplanepanel/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/valgulnecron/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
   versions:
     - id: evrima
       displayName: "The Isle (Evrima / UE)"
-      image: ghcr.io/gameplanepanel/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/valgulnecron/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
       default: true
 
   env:

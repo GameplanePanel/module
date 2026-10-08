@@ -24,12 +24,12 @@ spec:
     and server actions. Persistent world state and cross-shard cluster transfers live
     under `/serverdata/ShooterGame/Saved`.
 
-  image: ghcr.io/gameplanepanel/gameplane/ark-survival-evolved:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/valgulnecron/gameplane/ark-survival-evolved:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
   versions:
     - id: latest
       displayName: "Latest"
-      image: ghcr.io/gameplanepanel/gameplane/ark-survival-evolved:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/valgulnecron/gameplane/ark-survival-evolved:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
       default: true
 
   env:

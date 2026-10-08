@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/gameplanepanel/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/valgulnecron/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
 - **Architecture**: `linux/amd64`
 - **Runtime Model**: SteamCMD Linux dedicated server (`ArmaReforgerServer`).
 - **User & Execution Context**: UID 1000, GID 1000, working directory `/home/steam`.
