@@ -25,12 +25,12 @@ spec:
     Console access is available via container PTY stdin/stdout. Persistent server
     saves and Workshop mods reside under `/home/steam/.local/share/ArmaReforgerServer`.
 
-  image: ghcr.io/valgulnecron/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/gameplanepanel/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
   versions:
     - id: latest
       displayName: "Latest (Enfusion)"
-      image: ghcr.io/valgulnecron/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/gameplanepanel/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
       default: true
 
   env:

@@ -24,16 +24,16 @@ spec:
     console moderation, map rotation, and server administration on TCP port 22222.
     Server configuration and match logs persist under `/serverdata/HLL/Saved`.
 
-  image: ghcr.io/valgulnecron/gameplane/hell-let-loose:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/gameplanepanel/gameplane/hell-let-loose:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
   versions:
     - id: default
       displayName: "Default (WWII)"
-      image: ghcr.io/valgulnecron/gameplane/hell-let-loose:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/gameplanepanel/gameplane/hell-let-loose:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
       default: true
     - id: vietnam
       displayName: "Vietnam Community Preset"
-      image: ghcr.io/valgulnecron/gameplane/hell-let-loose:vietnam@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/gameplanepanel/gameplane/hell-let-loose:vietnam@sha256:0000000000000000000000000000000000000000000000000000000000000000
       default: false
 
   env:

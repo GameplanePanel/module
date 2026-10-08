@@ -11,7 +11,7 @@
 # Usage:
 #   modules/build-images.sh build                                       # build all 4 images locally
 #   modules/build-images.sh build --name fivem                          # build only fivem
-#   modules/build-images.sh push --registry ghcr.io/valgulnecron/gameplane --sign
+#   modules/build-images.sh push --registry ghcr.io/gameplanepanel/gameplane --sign
 
 set -euo pipefail
 
@@ -26,7 +26,7 @@ Commands:
   push               Build and push container images to an OCI registry
 
 Flags:
-  --registry <ref>   Registry prefix (e.g. ghcr.io/valgulnecron/gameplane) [required for push]
+  --registry <ref>   Registry prefix (e.g. ghcr.io/gameplanepanel/gameplane) [required for push]
   --name <name>      Target a specific image (fivem, farming-simulator-25, euro-truck-simulator-2, beammp)
   --tag <tag>        Override image tag (default: latest or module version)
   --sign             cosign-sign each pushed image by manifest digest
