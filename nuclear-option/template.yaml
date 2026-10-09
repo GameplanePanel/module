@@ -28,7 +28,7 @@ spec:
   displayName: Nuclear Option
   game: nuclear-option
   # Kept in lockstep with module.yaml's bundle version.
-  version: 1.0.1
+  version: 1.1.0
   categories: [Simulation, PvP]
   # Brand color for the dashboard.
   accentColor: "#ff6b6b"
@@ -39,7 +39,8 @@ spec:
     a graceful stop sequence, and live player list.
 
   # Digest-pinned image; no version catalog needed for this game.
-  image: ghcr.io/valgulnecron/gameplane/nuclear-option@sha256:1be11d39fa12ba9a90b9a79b6c5c26e5abcaf51cab2453e2029d3ee95262e044
+  # Built, published and cosign-signed by Gameplane's images.yaml from images/games/nuclear-option.
+  image: ghcr.io/gameplanepanel/gameplane/nuclear-option@sha256:acaeb3b7f0ab55bf6efe678b74745ed1a437ff97bf6d52cd26844efd28c13ce6
 
   # REQUIRED. The image runs as non-root (uid/gid 10000), so spec.security.runAsUser
   # must be set to match numerically. fsGroup ensures the non-root user can write
@@ -71,21 +72,21 @@ spec:
     mountPath: /data
 
   resources:
-    # CPU and memory are unmeasured under load; these are reasonable game-server
-    # defaults. CPU mirrors similar-sized game servers (1-4 range); memory is
-    # conservative until telemetry from live servers informs a better estimate.
+    # Per spec 002 FR-002: 2-4 CPU cores (CPU-bound workload) and 8 GiB minimum,
+    # 16 GiB recommended memory. Not yet measured under live player load.
     requests:
-      cpu: "1"
-      memory: 2Gi
+      cpu: "2"
+      memory: 8Gi
     limits:
       cpu: "4"
-      memory: 8Gi
+      memory: 16Gi
 
   rcon:
     protocol: nuclearoption
     port: 7779
-    # No password authentication on the remote-command port; the server
-    # binds loopback-only (127.0.0.1:7779) so access is pod-local only.
+    # The remote-command port has no authentication (no password, no handshake).
+    # The server binds loopback-only (127.0.0.1:7779), so access is pod-local only.
+    authentication: false
 
   # Field names match the DedicatedServerConfig.json structure exactly.
   configSchema:
@@ -94,6 +95,8 @@ spec:
       type: string
       default: "A Gameplane Nuclear Option server"
       required: true
+      minLength: 1
+      maxLength: 64
     - name: SERVER_PASSWORD
       displayName: Server password
       description: Required to join. Leave blank for an open server.
@@ -101,11 +104,11 @@ spec:
       default: ""
     - name: MAX_PLAYERS
       displayName: Max players
-      description: Maximum concurrent players. Default observed is 16 (server-enforced limit not verified).
+      description: Maximum concurrent players (4-64 accepted by Gameplane). Default observed is 16. The server-enforced limit is not verified against the game.
       type: int
       default: "16"
-      min: 1
-      max: 32
+      min: 4
+      max: 64
     - name: MISSION_ROTATION
       displayName: Mission rotation type
       description: |
@@ -189,6 +192,41 @@ spec:
           - name: message
             displayName: Message
             type: string
+            required: true
+      - id: set-next-mission
+        displayName: Set next mission
+        description: Choose the mission loaded after the current one ends. Mission names containing spaces (e.g. "Terminal Control") cannot be sent; the agent splits arguments on spaces.
+        icon: map
+        group: Mission
+        command: "set-next-mission {{.Params.group}} {{.Params.name}} {{.Params.maxTime}}.0"
+        params:
+          - name: group
+            displayName: Mission group
+            type: string
+            default: "BuiltIn"
+            required: true
+          - name: name
+            displayName: Mission name
+            type: string
+            default: "Escalation"
+            required: true
+          - name: maxTime
+            displayName: Max time (seconds)
+            type: int
+            default: "7200"
+            required: true
+      - id: set-time-remaining
+        displayName: Set time remaining
+        description: Set the seconds remaining in the current mission. Setting a small value ends the mission early.
+        icon: clock
+        group: Mission
+        confirm: true
+        command: "set-time-remaining {{.Params.seconds}}.0"
+        params:
+          - name: seconds
+            displayName: Seconds
+            type: int
+            default: "600"
             required: true
 
   probes:

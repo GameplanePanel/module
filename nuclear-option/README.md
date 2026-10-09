@@ -6,7 +6,7 @@ Nuclear Option is a multiplayer tactical team-based game. This module provides a
 
 **Game App ID**: 3930080  
 **Server Binary**: NuclearOptionServer.x86_64 (Unity, x86_64 only — no arm64 support)  
-**Minimum Cluster Resource**: 1 CPU, 2 GiB memory, 2 GiB storage  
+**Resource Requests**: 2 CPU, 8 GiB memory, 2 GiB storage (limits: 4 CPU, 16 GiB memory)  
 
 The server runs as non-root user `gameserver` (uid/gid 10000) for security.
 
@@ -79,5 +79,5 @@ Backups capture the entire `/data` volume, so game config, world state, ban list
 
 ## Version
 
-- **Module version**: 1.0.0
+- **Module version**: 1.1.0
 - **Requires Gameplane**: ≥ 0.2.0-beta.7
