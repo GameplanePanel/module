@@ -13,8 +13,9 @@
 
 - **Base Image**: `ghcr.io/valgulnecron/gameplane/ark-survival-evolved:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
 - **Architecture**: `linux/amd64`
+- **Image Source**: Built from `images/games/ark-survival-evolved/` in the main Gameplane repository on the shared SteamCMD base.
 - **Runtime Model**: SteamCMD Linux dedicated server (`ShooterGameServer`).
-- **User & Execution Context**: UID 1000, GID 1000, working directory `/serverdata`.
+- **User & Execution Context**: UID 10000, GID 10000, working directory `/data`.
 
 ---
 
@@ -32,13 +33,13 @@ Declared ports under `spec.ports`:
 
 ## 4. Storage & Persistence Layout
 
-- **Mount Path**: `/serverdata/ShooterGame/Saved`
+- **Mount Path**: `/data`
 - **Default Sizing**: `35Gi`
 - **Persisted Content**:
   - Saved worlds, tribe data, and dinosaur entities (`SavedArks/`)
   - Server configuration files (`Config/LinuxServer/GameUserSettings.ini`)
   - Cross-server cluster transfers (`clusters/`)
-- **Non-Shadowing Invariant**: The mount path isolates the `Saved/` directory without shadowing the server binaries in `/serverdata`.
+- **Non-Shadowing Invariant**: The volume holds the whole install, so nothing in the image is shadowed (the image ships only SteamCMD and the entrypoint).
 
 ---
 
@@ -74,9 +75,9 @@ Declared ports under `spec.ports`:
 
 ## 8. Key Invariants & Security
 
-- **User Matching**: `spec.security.runAsUser: 1000` matches image user.
-- **Environment**: `spec.env` contains `HOME=/serverdata`.
-- **Filesystem Permissions**: `spec.security.fsGroup: 1000` ensures volume read/write permissions.
+- **User Matching**: `spec.security.runAsUser: 10000` matches image user.
+- **Environment**: `HOME=/home/gameserver` is baked into the image (no `spec.env` entry needed).
+- **Filesystem Permissions**: `spec.security.fsGroup: 10000` ensures volume read/write permissions.
 
 ---
 

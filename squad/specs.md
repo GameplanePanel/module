@@ -13,8 +13,9 @@
 
 - **Base Image**: `ghcr.io/valgulnecron/gameplane/squad:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
 - **Architecture**: `linux/amd64`
+- **Image Source**: Built from `images/games/squad/` in the main Gameplane repository on the shared SteamCMD base.
 - **Runtime Model**: SteamCMD Linux dedicated server (`SquadServer.sh`).
-- **User & Execution Context**: UID 1000, GID 1000, working directory `/serverdata`.
+- **User & Execution Context**: UID 10000, GID 10000, working directory `/data`.
 
 ---
 
@@ -32,13 +33,13 @@ Declared ports under `spec.ports`:
 
 ## 4. Storage & Persistence Layout
 
-- **Mount Path**: `/serverdata/Squad/Saved`
+- **Mount Path**: `/data`
 - **Default Sizing**: `40Gi`
 - **Persisted Content**:
   - Server configuration files (`Server.cfg`, `Admins.cfg`, `LayerRotation.cfg`)
   - Server bans and player licenses
   - Match history and performance logs
-- **Non-Shadowing Invariant**: The mount path isolates the `Saved/` directory without shadowing the server binaries in `/serverdata`.
+- **Non-Shadowing Invariant**: The volume holds the whole install, so nothing in the image is shadowed (the image ships only SteamCMD and the entrypoint).
 
 ---
 
@@ -53,8 +54,8 @@ Declared ports under `spec.ports`:
 
 ## 6. Modding & Workshop Integration
 
-- **Modding Framework**: Steam Workshop (`Plugins/Mods`).
-- **Mod Directory Path**: `Plugins/Mods`
+- **Modding Framework**: Steam Workshop (`SquadGame/Plugins/Mods`).
+- **Mod Directory Path**: `SquadGame/Plugins/Mods`
 
 ---
 
@@ -68,9 +69,9 @@ Declared ports under `spec.ports`:
 
 ## 8. Key Invariants & Security
 
-- **User Matching**: `spec.security.runAsUser: 1000` matches image user.
-- **Environment**: `spec.env` contains `HOME=/serverdata`.
-- **Filesystem Permissions**: `spec.security.fsGroup: 1000` configured for volume ownership.
+- **User Matching**: `spec.security.runAsUser: 10000` matches image user.
+- **Environment**: `HOME=/home/gameserver` is baked into the image (no `spec.env` entry needed).
+- **Filesystem Permissions**: `spec.security.fsGroup: 10000` configured for volume ownership.
 
 ---
 

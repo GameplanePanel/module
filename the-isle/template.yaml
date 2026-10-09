@@ -2,7 +2,7 @@
 # Gameplane GameTemplate for The Isle (dedicated server).
 #
 # Runs Unreal Engine 4 dedicated server with Source RCON on TCP 8888.
-# World state, dinosaurs, and configs persist under /serverdata/TheIsle/Saved.
+# The whole The Isle install lives under /data; world state, dinosaurs, and configs persist under /data/TheIsle/Saved.
 #
 # Cluster-scoped; apply once per cluster:
 #     kubectl apply -f modules/the-isle/template.yaml
@@ -16,13 +16,14 @@ metadata:
 spec:
   displayName: The Isle
   game: the-isle
-  version: 1.0.0
+  version: 1.1.0
   categories: [Survival, Dinosaurs, Open World, Multiplayer]
   accentColor: "#22543d"
   description: |
     The Isle dedicated multiplayer server running on Unreal Engine.
     Source RCON powers remote console administration on port 8888 TCP;
-    saves and server configurations persist under `TheIsle/Saved`.
+    the game is installed on the `/data` volume, and saves and server configurations
+    persist under `/data/TheIsle/Saved`.
 
   image: ghcr.io/valgulnecron/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
@@ -32,14 +33,10 @@ spec:
       image: ghcr.io/valgulnecron/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
       default: true
 
-  env:
-    - name: HOME
-      value: /serverdata
-
   security:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
+    runAsUser: 10000
+    runAsGroup: 10000
+    fsGroup: 10000
 
   ports:
     - name: game
@@ -57,7 +54,7 @@ spec:
 
   storage:
     size: 25Gi
-    mountPath: /serverdata/TheIsle/Saved
+    mountPath: /data
 
   resources:
     requests: {cpu: "2", memory: 4Gi}

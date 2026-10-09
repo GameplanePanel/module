@@ -2,7 +2,7 @@
 # Gameplane GameTemplate for Squad (dedicated server).
 #
 # Runs Unreal Engine 4 dedicated server with Source-family RCON on TCP 21114.
-# Match-based rotation with persistent configurations under /serverdata/Squad/Saved.
+# Match-based rotation. The whole Squad install lives under /data; persistent configurations are in /data/SquadGame/ServerConfig.
 #
 # Cluster-scoped; apply once per cluster:
 #     kubectl apply -f modules/squad/template.yaml
@@ -16,13 +16,14 @@ metadata:
 spec:
   displayName: Squad
   game: squad
-  version: 1.0.0
+  version: 1.1.0
   categories: [Shooter, Tactical, Military, Multiplayer]
   accentColor: "#2d3748"
   description: |
     Squad dedicated multiplayer server. Source-family RCON powers remote
     console moderation, map rotation, and server administration on TCP port 21114.
-    Server configuration and match logs persist under `/serverdata/Squad/Saved`.
+    The whole game install lives on the `/data` volume, so server configuration
+    (`/data/SquadGame/ServerConfig`) and match logs persist there.
 
   image: ghcr.io/valgulnecron/gameplane/squad:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
 
@@ -32,14 +33,10 @@ spec:
       image: ghcr.io/valgulnecron/gameplane/squad:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
       default: true
 
-  env:
-    - name: HOME
-      value: /serverdata
-
   security:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
+    runAsUser: 10000
+    runAsGroup: 10000
+    fsGroup: 10000
 
   ports:
     - name: game
@@ -57,7 +54,7 @@ spec:
 
   storage:
     size: 40Gi
-    mountPath: /serverdata/Squad/Saved
+    mountPath: /data
 
   resources:
     requests: {cpu: "2", memory: 8Gi}
@@ -121,7 +118,7 @@ spec:
             type: string
             required: true
     mods:
-      path: Plugins/Mods
+      path: SquadGame/Plugins/Mods
       extensions: [".pak"]
       install:
         allowedHosts:

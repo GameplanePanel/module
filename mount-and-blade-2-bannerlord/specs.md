@@ -13,8 +13,9 @@
 
 - **Base Image**: `ghcr.io/valgulnecron/gameplane/mount-and-blade-2-bannerlord:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
 - **Architecture**: `linux/amd64`
+- **Image Source**: Built from `images/games/mount-and-blade-2-bannerlord/` in the main Gameplane repository on the shared SteamCMD base.
 - **Runtime Model**: Linux-native / Wine .NET 6 TaleWorlds dedicated server binary.
-- **User & Execution Context**: UID `1000`, GID `1000`, working directory `/serverdata`.
+- **User & Execution Context**: UID `10000`, GID `10000`, working directory `/data`.
 
 ---
 
@@ -31,13 +32,13 @@ Declared ports under `spec.ports`:
 
 ## 4. Storage & Persistence Layout
 
-- **Mount Path**: `/serverdata`
+- **Mount Path**: `/data`
 - **Default Sizing**: `20Gi`
 - **Persisted Content**:
   - Downloaded server binaries and TaleWorlds modules
   - Match configuration files (`tdm_config.txt`, `siege_config.txt`)
   - Server tokens and authentication credentials
-- **Non-Shadowing Invariant**: Dedicated server install root resides within `/serverdata`.
+- **Non-Shadowing Invariant**: The volume holds the whole install, so nothing in the image is shadowed (the image ships only SteamCMD and the entrypoint).
 
 ---
 
@@ -67,9 +68,9 @@ Declared ports under `spec.ports`:
 
 ## 8. Key Invariants & Security
 
-- **User Matching**: `spec.security.runAsUser: 1000` matches image user.
-- **Environment**: `spec.env` defines `HOME: /serverdata`.
-- **Filesystem Permissions**: `spec.security.fsGroup: 1000` ensures write permission on `/serverdata`.
+- **User Matching**: `spec.security.runAsUser: 10000` matches image user.
+- **Environment**: `HOME=/home/gameserver` is baked into the image (no `spec.env` entry needed).
+- **Filesystem Permissions**: `spec.security.fsGroup: 10000` ensures write permission on `/data`.
 
 ---
 

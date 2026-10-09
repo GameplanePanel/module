@@ -24,7 +24,7 @@ Graceful stop triggers the `save` command prior to container termination.
 
 ## Storage
 
-Storage is mounted at `/serverdata/TheIsle/Saved` (25 GiB default). All world state, player profiles, and server configuration files persist across pod restarts.
+Storage is mounted at `/data` (25 GiB default). The game is installed there on first start, and all world state, player profiles, and server configuration files persist under `/data/TheIsle/Saved` across pod restarts.
 
 ## Sample
 
