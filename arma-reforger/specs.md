@@ -11,10 +11,11 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/valgulnecron/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/acemod/arma-reforger:latest@sha256:beb50bcaebbc3b3124363ed1c0a5729b514493d72b3cadd52a204ade6105fecd`
 - **Architecture**: `linux/amd64`
+- **Image Source**: `ghcr.io/acemod/arma-reforger` (https://github.com/acemod/docker-reforger), the ACE team's community image.
 - **Runtime Model**: SteamCMD Linux dedicated server (`ArmaReforgerServer`).
-- **User & Execution Context**: UID 1000, GID 1000, working directory `/home/steam`.
+- **User & Execution Context**: root (UID 0), by the upstream image's design; working directory `/reforger`.
 
 ---
 
@@ -31,13 +32,13 @@ Declared ports under `spec.ports`:
 
 ## 4. Storage & Persistence Layout
 
-- **Mount Path**: `/home/steam/.local/share/ArmaReforgerServer`
+- **Mount Path**: `/reforger`
 - **Default Sizing**: `30Gi`
 - **Persisted Content**:
   - Profile state and saved game sessions
   - Server configs (`ArmaReforgerServer.json`)
-  - Downloaded Workshop addons (`addons/`)
-- **Non-Shadowing Invariant**: The mount path isolates server state under `.local/share/ArmaReforgerServer`.
+  - Downloaded Workshop addons (`workshop/`)
+- **Non-Shadowing Invariant**: The mount path holds the server install and its state under `/reforger`.
 
 ---
 
@@ -53,7 +54,7 @@ Declared ports under `spec.ports`:
 ## 6. Modding & Workshop Integration
 
 - **Modding Framework**: Bohemia Interactive Workshop / addons.
-- **Mod Directory Path**: `addons`
+- **Mod Directory Path**: `workshop`
 
 ---
 
@@ -72,9 +73,7 @@ Declared ports under `spec.ports`:
 
 ## 8. Key Invariants & Security
 
-- **User Matching**: `spec.security.runAsUser: 1000` matches image user (`steam`).
-- **Environment**: `spec.env` contains `HOME=/home/steam`.
-- **Filesystem Permissions**: `spec.security.fsGroup: 1000` configured for volume ownership.
+- **No `spec.security` override**: the ACE image runs as root and owns its directories.
 
 ---
 

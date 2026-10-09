@@ -2,6 +2,8 @@
 
 Arma Reforger dedicated server package for Gameplane. Runs on Bohemia Interactive's Enfusion engine with interactive PTY stdin console, persistent profile and saves, and Steam Workshop modding support.
 
+Image: `ghcr.io/acemod/arma-reforger` (https://github.com/acemod/docker-reforger), the ACE team's community image. It runs as root by design, and SteamCMD installs the server into `/reforger` on every start.
+
 ## Install
 
 ```sh
@@ -25,7 +27,7 @@ Most dedicated servers allow anonymous SteamCMD download. If an authenticated St
 
 ## Storage
 
-Persistent storage is mounted at `/home/steam/.local/share/ArmaReforgerServer` (30 GiB default). All world state, player profiles, and downloaded Workshop mods persist across container restarts.
+Persistent storage is mounted at `/reforger` (30 GiB default). The server install, `Configs/`, `profile/`, and `workshop/` all live on the volume, so world state, player profiles, and downloaded Workshop mods persist across container restarts.
 
 ## Sample
 
