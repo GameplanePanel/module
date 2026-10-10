@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/valgulnecron/gameplane/ark-survival-evolved:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/ark-survival-evolved:latest@sha256:2a4298f8055dbff4107c49c961cace1f2bed42809e6b93fb4924371ae4484e58`
 - **Architecture**: `linux/amd64`
 - **Image Source**: Built from `images/games/ark-survival-evolved/` in the main Gameplane repository on the shared SteamCMD base.
 - **Runtime Model**: SteamCMD Linux dedicated server (`ShooterGameServer`).

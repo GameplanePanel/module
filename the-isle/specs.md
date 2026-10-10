@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/valgulnecron/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/the-isle:latest@sha256:229ec85c92f8f722beb0b7c735cfdb5dbe40e6782d537a6c56b32c6baa57d5a8`
 - **Architecture**: `linux/amd64`
 - **Image Source**: Built from `images/games/the-isle/` in the main Gameplane repository on the shared SteamCMD base.
 - **Runtime Model**: SteamCMD / Unreal Engine Linux dedicated server.

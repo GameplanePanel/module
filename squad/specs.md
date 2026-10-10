@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/valgulnecron/gameplane/squad:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/squad:latest@sha256:c96561c975b1cd049668da930582181de7ac8d74e5d8d2251080423ec2ee2748`
 - **Architecture**: `linux/amd64`
 - **Image Source**: Built from `images/games/squad/` in the main Gameplane repository on the shared SteamCMD base.
 - **Runtime Model**: SteamCMD Linux dedicated server (`SquadServer.sh`).

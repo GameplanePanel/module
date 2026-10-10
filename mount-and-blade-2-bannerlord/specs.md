@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/valgulnecron/gameplane/mount-and-blade-2-bannerlord:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/mount-and-blade-2-bannerlord:latest@sha256:ac4796548429fce3bf1990839b75002f08ee8d6c11260bc4a26329f5a7d93717`
 - **Architecture**: `linux/amd64`
 - **Image Source**: Built from `images/games/mount-and-blade-2-bannerlord/` in the main Gameplane repository on the shared SteamCMD base.
 - **Runtime Model**: Linux-native / Wine .NET 6 TaleWorlds dedicated server binary.

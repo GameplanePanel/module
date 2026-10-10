@@ -25,12 +25,12 @@ spec:
     the game is installed on the `/data` volume, and saves and server configurations
     persist under `/data/TheIsle/Saved`.
 
-  image: ghcr.io/valgulnecron/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/gameplanepanel/gameplane/the-isle:latest@sha256:229ec85c92f8f722beb0b7c735cfdb5dbe40e6782d537a6c56b32c6baa57d5a8
 
   versions:
     - id: evrima
       displayName: "The Isle (Evrima / UE)"
-      image: ghcr.io/valgulnecron/gameplane/the-isle:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/gameplanepanel/gameplane/the-isle:latest@sha256:229ec85c92f8f722beb0b7c735cfdb5dbe40e6782d537a6c56b32c6baa57d5a8
       default: true
 
   security:
