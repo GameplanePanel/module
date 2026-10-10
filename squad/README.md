@@ -24,7 +24,7 @@ Gameplay is match-based, and server shutdown does not require a pre-shutdown sav
 
 ## Storage
 
-Persistent storage is mounted at `/serverdata/Squad/Saved` (40 GiB default). Server settings, admin lists, and map rotation history persist across container restarts.
+Storage is mounted at `/data` (40 GiB default). The game is installed there on first start, and server settings (`/data/SquadGame/ServerConfig`), admin lists, and map rotation history persist across container restarts.
 
 ## Sample
 

@@ -25,7 +25,7 @@ Bannerlord dedicated servers run an interactive CLI on standard input. The Gamep
 
 ## Storage
 
-Storage is mounted at `/serverdata` (20 GiB default) to hold the server binaries, configuration templates, and custom module XMLs.
+Storage is mounted at `/data` (20 GiB default). The game is installed there on first start, along with the server binaries, configuration templates, and custom module XMLs.
 
 ## Sample
 
