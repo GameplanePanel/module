@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/valgulnecron/gameplane/farming-simulator-25:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/farming-simulator-25:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
 - **Architecture**: `linux/amd64`
 - **Runtime Model**: Headless Wine and dummy X11 (Xvfb) supervising the GIANTS dedicated server and web admin portal in a single-pod architecture (FR-012).
 - **User & Execution Context**: UID `1000`, GID `1000`, working directory `/serverdata`.
