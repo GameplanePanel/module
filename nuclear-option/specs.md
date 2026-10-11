@@ -60,9 +60,10 @@ Remote-command enablement (protocol contract, Enablement section):
   - Server install (`NuclearOptionServer.x86_64` and game files).
   - Rendered config: `/data/DedicatedServerConfig.json`, re-rendered from the template on every pod start.
   - Mission files: `/data/NuclearOption-Missions/`.
-  - Ban list: configured as the relative path `ban_list.txt` (`BanListPaths`). Its resolved on-disk location (under `/data` or not) is **UNVERIFIED**.
-  - Logs (see section 6).
-- **Backups**: Gameplane backup and restore capture the whole `/data` volume (FR-013). No module-specific backup tooling.
+  - Ban list: configured as the relative path `ban_list.txt` (`BanListPaths`). **Verified 2026-10-11**: the server's working directory is `/data`, so it resolves to `/data/ban_list.txt`, on the volume. **The server never creates this file.** On a fresh install `banlist-add` logs `[AllowBanList] [Error] File does not exist: ban_list.txt` and the ban is held in memory only; nothing is written. Once the file exists (created empty or with IDs), `banlist-add` appends one Steam ID per line (`Appending Steam <id> to ban_list.txt`) and `banlist-remove` deletes the line. Today bans made on a fresh server do not survive a restart or a backup/restore until the file exists. The module does not create it; this needs a template or entrypoint change (listed for the maintainer, not made here).
+  - Mission state: no mission-state file was observed. `/data/NuclearOption-Missions/` did not exist on a fresh server, and `set-next-mission` changes nothing on disk. The next-mission override is in memory and does not survive a restart.
+  - Logs: not on the volume (see section 6).
+- **Backups**: Gameplane backup and restore capture the whole `/data` volume (FR-013). No module-specific backup tooling. **Round-trip verified 2026-10-11** with the stock `Backup`/`Restore` CRs and a restic REST repo: backup of the 936 MB volume completed in 9 s; the restore suspended the server, restored, and restarted it in about 5 s. `DedicatedServerConfig.json` and a planted `ban_list.txt` were wiped, then came back with SHA-256 sums identical to before the backup. Mission state could not be checked because none exists on disk. The restored pod then started normally.
 
 ---
 
@@ -88,8 +89,8 @@ Config-path override: the `-DedicatedServer <path/to/config.json>` flag sets the
 ## 6. Logs
 
 - **Verified location** (Claim 5): `./logs/server-<timestamp>.log`, written when the server is started with the `-logFile` flag through `RunServer.sh`. Format is plain text.
-- **Gameplane image log path**: **UNVERIFIED** for this image build. The module README lists stdout (`kubectl logs`) as the game log location.
-- Log files are under `/data` in the backup scope only if the working directory is on that volume. **UNVERIFIED**.
+- **Gameplane image log path** (verified 2026-10-11): the image entrypoint (`containers/games/nuclear-option/entrypoint.sh`) execs `NuclearOptionServer.x86_64 -batchmode -nographics -ServerRemoteCommands -DedicatedServer /data/DedicatedServerConfig.json` directly as PID 1. It does not use `RunServer.sh` and passes no `-logFile`, so the Unity log goes to **stdout only** (`kubectl logs <pod> -c game`). Format: plain text, one line per event, prefixed with seconds since start and a `[Component]` tag (for example `3.484: [DedicatedServerManager] Starting run loop`). The first lines of the stream are the SteamCMD install output.
+- **No game log file exists on `/data`.** No `*.log` or `./logs/` directory was found on the volume, so game logs are not in the backup scope. Steam's own client logs go to `/home/gameserver/.local/share/Steam/logs/`, which is outside the volume and is lost on pod restart.
 
 ---
 
@@ -97,6 +98,7 @@ Config-path override: the `-DedicatedServer <path/to/config.json>` flag sets the
 
 - **Readiness signal** (Claim 4, resolved): the log line `[DedicatedServerManager] Waiting for Players before loading next map` appears about 3.9 s after startup and marks the point the server accepts connections.
 - **Probes in template**: all three probes (startup, readiness, liveness) are exec probes running `timeout 2 nc -z 127.0.0.1 7779`. They check the remote-command port, not the log line.
+- **Observed defect (2026-10-11): the probes cannot succeed.** The game image has `timeout` but no `nc`. Every probe fails with `timeout: failed to execute process: No such file or directory`. On kubelab the pod stayed `1/2` (agent ready, game container never `started`), the GameServer stayed in phase `Starting`, and kubelet restarted the game container once the startup budget ran out (about 20 minutes). The server itself ran normally throughout and answered on 7779. The log marker above did appear. Fixing this needs a template or image change (for example a probe that does not depend on `nc`); none was made here.
 - **Why not tcpSocket**: the server binds `127.0.0.1:7779` only. Kubelet tcpSocket probes connect from the node to the pod IP, so they cannot reach a loopback-only socket. Exec probes run inside the pod and avoid this.
 - **Startup budget**: first boot downloads about 891 MB. `initialDelaySeconds` 30, `periodSeconds` 15, `failureThreshold` 80 give about 20 minutes.
 - **Liveness**: `periodSeconds` 30, `failureThreshold` 5.
@@ -164,7 +166,12 @@ Other registered commands (not declared as actions): `update-ready`, `reload-con
 - **Mission rotation**: `MISSION_ROTATION` semantics are **UNVERIFIED**.
 - **MAX_PLAYERS**: the server-enforced limit is **UNVERIFIED**. Gameplane accepts 4-64.
 - **Set-time-remaining**: response body **UNVERIFIED**.
-- **Player list entry shape**: `faction` and `steamId` fields are documented; per-entry shape is unverified with a connected player.
+- **Player list entry shape**: `faction` and `steamId` fields are documented; per-entry shape is unverified with a connected player (no client was available on 2026-10-11 either).
+- **Chat**: `send-chat-message` returned 2000 but the server logged a `NullReferenceException` with no players connected. Whether chat works with a player connected is **UNVERIFIED**.
+- **Set-next-mission validation**: the server answers 2000 for any group and name, including nonexistent ones. The response cannot confirm the mission exists, and the override is not persisted (section 4).
+- **Ban persistence**: bans are written to disk only if `/data/ban_list.txt` already exists (section 4).
+- **Probes**: the exec probes use `nc`, which the image lacks; the pod never reports Ready (section 7).
+- **Steam Web API display names (T127)**: **not observed**. The moderation walk with and without the `api.steam.apiKeySecretRef` Secret needs a connected player, and none was available. The expected behaviour (names resolved with the Secret; raw Steam IDs without it, no error, within 5 s, SC-004) is unconfirmed.
 - **Architecture**: x86_64 only.
 - **Resource figures**: spec defaults, not measured under load.
 
@@ -178,7 +185,24 @@ Other registered commands (not declared as actions): `update-ready`, `reload-con
 | 2. Network ports | Amended | TCP 127.0.0.1:7779 confirmed. UDP 7778 bound. UDP 7777 not bound. |
 | 3. Remote-command protocol | Resolved | Length-prefixed JSON framing; status codes 2000/4003/4004/4005 confirmed. `set-next-mission` takes 3 arguments. Kick, ban and unban return 2000 for unknown IDs. |
 | 4. Readiness signal | Resolved | `[DedicatedServerManager] Waiting for Players before loading next map` at about 3.9 s. |
-| 5. Log location and format | Resolved | `./logs/server-<timestamp>.log` with `-logFile` via `RunServer.sh`. Plain text. |
+| 5. Log location and format | Superseded for the Gameplane image | `./logs/server-<timestamp>.log` applies to the vendor `RunServer.sh`. The Gameplane image logs to stdout only (section 6, 2026-10-11). |
+
+### Config validation matrix (2026-10-11, T128)
+
+Run on kubelab against a server from the repo template (minus `spec.rcon.authentication`, which the cluster's older CRD rejects). One GameServer per case; `status.phase` and the `Ready` condition read back.
+
+| `spec.config` | Result |
+|---|---|
+| `SERVER_NAME` 65 characters | `Failed` within 1 s: `config field "SERVER_NAME" must be at most 64 characters` |
+| `SERVER_NAME` empty | `Failed`: `required config field "SERVER_NAME" has no value and no default` |
+| `MAX_PLAYERS: "3"` | `Failed`: `config field "MAX_PLAYERS" must be at least 4` |
+| `MAX_PLAYERS: "65"` | `Failed`: `config field "MAX_PLAYERS" must be at most 64` |
+| `MAX_PLAYERS: "abc"` | `Failed`: `config field "MAX_PLAYERS": "abc" is not an integer` |
+| `MISSION_ROTATION: "2"` | `Failed`: `config field "MISSION_ROTATION": "2" is not one of [0, 1]` |
+| unknown key `BOGUS_FIELD` | `Failed`: `unknown config keys BOGUS_FIELD: template … accepts [SERVER_NAME, SERVER_PASSWORD, MAX_PLAYERS, MISSION_ROTATION]` |
+| `SERVER_NAME: He said "hi" \ back`, `SERVER_PASSWORD: p"w\d` | Valid. Rendered into `DedicatedServerConfig.json` with correct JSON escaping (`"He said \"hi\" \\ back"`); the server started and advertised the name unchanged |
+
+All seven invalid cases were rejected by the operator before any pod was created (`pods … NotFound`), with the field and constraint named. No crash-loop or hung state. The mission-name case is skipped (`MISSION_LIST` was dropped). The CRD itself does not validate (`spec.config` is a string map), so the rejection comes from the reconciler, not at `kubectl apply`.
 
 ---
 
