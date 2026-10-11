@@ -1076,7 +1076,6 @@ LAYOUT_ENFORCED_MODULES = {
     "satisfactory",
     "ark-survival-evolved",
     "arma-reforger",
-    "hell-let-loose",
     "squad",
 }
 
@@ -1085,7 +1084,7 @@ def rule_directory_layout(module_dir: Path) -> list[Finding]:
     """Ensure required metadata, documentation, and samples are present.
 
     Fires at ERROR severity when README.md, specs.md, or a non-empty samples/
-    directory is missing. Scoped to the 26 top-Steam modules or any module
+    directory is missing. Scoped to the 25 top-Steam modules or any module
     with a .layout-enforced marker file.
     """
     if module_dir.name not in LAYOUT_ENFORCED_MODULES and not (module_dir / ".layout-enforced").exists():
