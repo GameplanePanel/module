@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/gameplanepanel/gameplane/euro-truck-simulator-2:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/euro-truck-simulator-2:latest@sha256:170562b495bca0535830ada89d9d01b52d94e79c99a2354b2cffcb72103a19f5`
 - **Architecture**: `linux/amd64`
 - **Runtime Model**: Linux 64-bit standalone dedicated server binary (`eurotrucks2_server`) managed by Gameplane supervisor script.
 - **User & Execution Context**: UID `1000`, GID `1000`, working directory `/serverdata`.

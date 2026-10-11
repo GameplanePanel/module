@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/gameplanepanel/gameplane/beammp:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/beammp:latest@sha256:4c4ffee19ca8013cacbbdf8e65e0fe09109ab99c8607313daa4f688bab8b9391`
 - **Architecture**: `linux/amd64`
 - **Runtime Model**: Standalone C++ binary (`BeamMP-Server`) executing natively under Alpine Linux.
 - **User & Execution Context**: UID `1000`, GID `1000`, working directory `/serverdata`.
