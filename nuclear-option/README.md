@@ -64,16 +64,19 @@ The server exposes a JSON request/response remote-command protocol on TCP port 7
 
 ## Logs and Persistence
 
-- **Game logs**: stdout (view via `kubectl logs`)
+- **Game logs**: stdout only (view via `kubectl logs <pod> -c game`). No log files are written to `/data`, so logs are not part of backups.
 - **Config file**: `/data/DedicatedServerConfig.json` (rendered on every pod start from template)
 - **Mission files**: `/data/NuclearOption-Missions/` (persisted across restarts; custom missions placed here)
-- **Ban list**: `/data/ban_list.txt` (persisted, managed by the server)
+- **Ban list**: `/data/ban_list.txt`. The server reads and updates it but **does not create it**: until the file exists, bans live in memory only and are lost on restart.
 
-Backups capture the entire `/data` volume, so game config, world state, ban list, and logs all persist.
+Backups capture the entire `/data` volume, so the game config and the ban list (once the file exists) persist; a backup/restore round-trip was verified. Logs are not on the volume.
 
 ## Known Limitations
 
 - **No dedicated join port detected**: Live testing on 2026-08-22 found UDP 7778 bound (query port) but **UDP 7777 was NOT observed listening**. The server advertises via Steam (`SteamGameServer.LogOnAnonymous` + `Set Advertise Server: True`), suggesting players join through Steam's game-server routing rather than a raw local UDP port. Join functionality has not been end-to-end verified with an actual client; treat as exploratory.
+- **Pod never reports Ready**: the probes run `nc`, which the image does not contain, so they always fail (observed 2026-10-11). The server still runs and answers on 7779; see `specs.md` section 7.
+- **`send-chat-message`, mission validation**: chat returned success while the server logged a `NullReferenceException` (no players connected); `set-next-mission` accepts nonexistent missions with a success status.
+- **Display names**: resolved via the Steam Web API key Secret when configured, otherwise raw Steam IDs are shown. This path has not been observed against a connected player.
 - **No arm64 support**: The binary is x86_64 only (Linux native, no Proton layer). The module does not run on arm64 clusters.
 - **Player list shape partially unverified**: The official protocol spec documents `steamId` and `faction` fields, but this was not confirmed with a live player connected. Display names are not available on the wire; they are hydrated server-side via Steam Web API.
 
