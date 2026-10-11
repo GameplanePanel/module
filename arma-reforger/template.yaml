@@ -1,9 +1,10 @@
 # yaml-language-server: $schema=../.schema/gametemplate.schema.json
 # Gameplane GameTemplate for Arma Reforger (dedicated server).
+# Image: ghcr.io/acemod/arma-reforger (ACE team). Runs as root by design: SteamCMD installs the server into /reforger on every start.
 #
 # Runs Bohemia Interactive's Enfusion-engine dedicated server. Console access
 # is provided via container PTY (stdin/stdout). World saves, profile settings,
-# and downloaded Workshop mods persist under /home/steam/.local/share/ArmaReforgerServer.
+# and downloaded Workshop mods persist under /reforger.
 #
 # Cluster-scoped; apply once per cluster:
 #     kubectl apply -f modules/arma-reforger/template.yaml
@@ -17,30 +18,27 @@ metadata:
 spec:
   displayName: Arma Reforger
   game: arma-reforger
-  version: 1.0.0
+  version: 1.1.0
   categories: [Shooter, Tactical, Military, Simulation]
   accentColor: "#3a5a40"
   description: |
     Arma Reforger dedicated server running Bohemia Interactive's Enfusion engine.
     Console access is available via container PTY stdin/stdout. Persistent server
-    saves and Workshop mods reside under `/home/steam/.local/share/ArmaReforgerServer`.
+    saves and Workshop mods reside under `/reforger`, together with the server install.
 
-  image: ghcr.io/valgulnecron/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/acemod/arma-reforger:latest@sha256:beb50bcaebbc3b3124363ed1c0a5729b514493d72b3cadd52a204ade6105fecd
 
   versions:
     - id: latest
       displayName: "Latest (Enfusion)"
-      image: ghcr.io/valgulnecron/gameplane/arma-reforger:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/acemod/arma-reforger:latest@sha256:beb50bcaebbc3b3124363ed1c0a5729b514493d72b3cadd52a204ade6105fecd
       default: true
 
   env:
-    - name: HOME
-      value: /home/steam
-
-  security:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
+    - name: ARMA_PROFILE
+      value: /reforger/profile
+    - name: ARMA_WORKSHOP_DIR
+      value: /reforger/workshop
 
   ports:
     - name: game
@@ -54,7 +52,7 @@ spec:
 
   storage:
     size: 30Gi
-    mountPath: /home/steam/.local/share/ArmaReforgerServer
+    mountPath: /reforger
 
   resources:
     requests: {cpu: "2", memory: 8Gi}
@@ -87,7 +85,7 @@ spec:
         transport: stdin
         command: "save"
     mods:
-      path: addons
+      path: workshop
       extensions: [".pak", ".bin"]
       install:
         allowedHosts:
@@ -100,19 +98,19 @@ spec:
             steamAppID: 1874880
 
   configSchema:
-    - name: SERVER_NAME
+    - name: GAME_NAME
       displayName: Server Name
       type: string
       default: "Gameplane Arma Reforger Server"
-    - name: SERVER_PASSWORD
+    - name: GAME_PASSWORD
       displayName: Server Password
       type: password
       default: ""
-    - name: ADMIN_PASSWORD
+    - name: GAME_PASSWORD_ADMIN
       displayName: Admin Password
       type: password
       default: ""
-    - name: MAX_PLAYERS
+    - name: GAME_MAX_PLAYERS
       displayName: Max Players
       type: int
       default: 64

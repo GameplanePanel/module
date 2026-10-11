@@ -2,7 +2,7 @@
 # Gameplane GameTemplate for ARK: Survival Evolved (dedicated server).
 #
 # Dedicated server for ARK: Survival Evolved running on Linux.
-# Persistent world state and cluster directory live under /serverdata/ShooterGame/Saved.
+# The whole ARK install lives under /data; persistent world state and cluster directory live under /data/ShooterGame/Saved.
 #
 # Cluster-scoped; apply once per cluster:
 #     kubectl apply -f modules/ark-survival-evolved/template.yaml
@@ -16,30 +16,26 @@ metadata:
 spec:
   displayName: "ARK: Survival Evolved"
   game: ark-survival-evolved
-  version: 1.0.0
+  version: 1.1.0
   categories: [Survival, Open World, Multiplayer, Dinosaurs]
   accentColor: "#00b2e2"
   description: |
     ARK: Survival Evolved dedicated server. Source RCON powers remote administration
     and server actions. Persistent world state and cross-shard cluster transfers live
-    under `/serverdata/ShooterGame/Saved`.
+    under `/data/ShooterGame/Saved`, on the same volume as the game install.
 
-  image: ghcr.io/valgulnecron/gameplane/ark-survival-evolved:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/gameplanepanel/gameplane/ark-survival-evolved:latest@sha256:2a4298f8055dbff4107c49c961cace1f2bed42809e6b93fb4924371ae4484e58
 
   versions:
     - id: latest
       displayName: "Latest"
-      image: ghcr.io/valgulnecron/gameplane/ark-survival-evolved:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/gameplanepanel/gameplane/ark-survival-evolved:latest@sha256:2a4298f8055dbff4107c49c961cace1f2bed42809e6b93fb4924371ae4484e58
       default: true
 
-  env:
-    - name: HOME
-      value: /serverdata
-
   security:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
+    runAsUser: 10000
+    runAsGroup: 10000
+    fsGroup: 10000
 
   ports:
     - name: game
@@ -57,7 +53,7 @@ spec:
 
   storage:
     size: 35Gi
-    mountPath: /serverdata/ShooterGame/Saved
+    mountPath: /data
 
   resources:
     requests: {cpu: "2", memory: 8Gi}

@@ -24,7 +24,7 @@ spec:
     connects via container PTY stdin/stdout. Server state and configs persist
     under the user profile directory.
 
-  image: ghcr.io/valgulnecron/gameplane/euro-truck-simulator-2:latest@sha256:0000000000000000000000000000000000000000000000000000000000000000
+  image: ghcr.io/gameplanepanel/gameplane/euro-truck-simulator-2:latest@sha256:170562b495bca0535830ada89d9d01b52d94e79c99a2354b2cffcb72103a19f5
 
   env:
     - name: HOME

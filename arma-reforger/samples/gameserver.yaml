@@ -8,10 +8,10 @@ spec:
     name: arma-reforger
 
   config:
-    SERVER_NAME: "Gameplane Arma Reforger Server"
-    SERVER_PASSWORD: ""
-    ADMIN_PASSWORD: "secret-admin-pass"
-    MAX_PLAYERS: "64"
+    GAME_NAME: "Gameplane Arma Reforger Server"
+    GAME_PASSWORD: ""
+    GAME_PASSWORD_ADMIN: "secret-admin-pass"
+    GAME_MAX_PLAYERS: "64"
 
   networking:
     expose: NodePort

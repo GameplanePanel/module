@@ -24,7 +24,7 @@ The server stops cleanly by issuing `SaveWorld` and `DoExit` prior to container 
 
 ## Storage & Cluster Travel
 
-Storage is mounted at `/serverdata/ShooterGame/Saved` (35 GiB default). All map saves, tribe data, player profiles, and cross-shard cluster transfers (`clusters/` subfolder) persist across container restarts.
+Storage is mounted at `/data` (35 GiB default). The game is installed there on first start, and all map saves, tribe data, player profiles, and cross-shard cluster transfers (`clusters/` subfolder, under `/data/ShooterGame/Saved`) persist across container restarts.
 
 To enable cluster travel between multiple ARK servers, supply the same `CLUSTER_ID` in each server's configuration and configure a shared volume or synchronize the cluster folder.
 
