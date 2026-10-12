@@ -1,0 +1,494 @@
+{
+  "actions.announce-restart.description": {
+    "defaultMessage": "Warn players, save the world, then stop the server.",
+    "description": "Help text of server action announce-restart (template.yaml spec.capabilities.actions)"
+  },
+  "actions.announce-restart.displayName": {
+    "defaultMessage": "Announce restart",
+    "description": "Label of server action announce-restart (template.yaml spec.capabilities.actions)"
+  },
+  "actions.announce-restart.group": {
+    "defaultMessage": "Server",
+    "description": "Group heading of server action announce-restart (template.yaml spec.capabilities.actions)"
+  },
+  "actions.announce-restart.params.message.displayName": {
+    "defaultMessage": "Message",
+    "description": "Label of parameter message of server action announce-restart (template.yaml spec.capabilities.actions)"
+  },
+  "actions.broadcast.description": {
+    "defaultMessage": "Send a chat message to everyone on the server.",
+    "description": "Help text of server action broadcast (template.yaml spec.capabilities.actions)"
+  },
+  "actions.broadcast.displayName": {
+    "defaultMessage": "Broadcast message",
+    "description": "Label of server action broadcast (template.yaml spec.capabilities.actions)"
+  },
+  "actions.broadcast.group": {
+    "defaultMessage": "Server",
+    "description": "Group heading of server action broadcast (template.yaml spec.capabilities.actions)"
+  },
+  "actions.broadcast.params.message.displayName": {
+    "defaultMessage": "Message",
+    "description": "Label of parameter message of server action broadcast (template.yaml spec.capabilities.actions)"
+  },
+  "actions.give-item.description": {
+    "defaultMessage": "Grant an item to a player.",
+    "description": "Help text of server action give-item (template.yaml spec.capabilities.actions)"
+  },
+  "actions.give-item.displayName": {
+    "defaultMessage": "Give item",
+    "description": "Label of server action give-item (template.yaml spec.capabilities.actions)"
+  },
+  "actions.give-item.group": {
+    "defaultMessage": "Players",
+    "description": "Group heading of server action give-item (template.yaml spec.capabilities.actions)"
+  },
+  "actions.give-item.params.count.displayName": {
+    "defaultMessage": "Quantity",
+    "description": "Label of parameter count of server action give-item (template.yaml spec.capabilities.actions)"
+  },
+  "actions.give-item.params.item.displayName": {
+    "defaultMessage": "Item ID (e.g. diamond, golden_apple)",
+    "description": "Label of parameter item of server action give-item (template.yaml spec.capabilities.actions)"
+  },
+  "actions.give-item.params.player.displayName": {
+    "defaultMessage": "Player name",
+    "description": "Label of parameter player of server action give-item (template.yaml spec.capabilities.actions)"
+  },
+  "actions.save-world.description": {
+    "defaultMessage": "Flush the world to disk now.",
+    "description": "Help text of server action save-world (template.yaml spec.capabilities.actions)"
+  },
+  "actions.save-world.displayName": {
+    "defaultMessage": "Save world",
+    "description": "Label of server action save-world (template.yaml spec.capabilities.actions)"
+  },
+  "actions.save-world.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action save-world (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-difficulty.displayName": {
+    "defaultMessage": "Set difficulty",
+    "description": "Label of server action set-difficulty (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-difficulty.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action set-difficulty (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-difficulty.params.level.displayName": {
+    "defaultMessage": "Difficulty",
+    "description": "Label of parameter level of server action set-difficulty (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-difficulty.params.level.options.easy": {
+    "defaultMessage": "easy",
+    "description": "Choice \"easy\" of parameter level of server action set-difficulty (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-difficulty.params.level.options.hard": {
+    "defaultMessage": "hard",
+    "description": "Choice \"hard\" of parameter level of server action set-difficulty (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-difficulty.params.level.options.normal": {
+    "defaultMessage": "normal",
+    "description": "Choice \"normal\" of parameter level of server action set-difficulty (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-difficulty.params.level.options.peaceful": {
+    "defaultMessage": "peaceful",
+    "description": "Choice \"peaceful\" of parameter level of server action set-difficulty (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.description": {
+    "defaultMessage": "Change one player''s game mode.",
+    "description": "Help text of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.displayName": {
+    "defaultMessage": "Set player game mode",
+    "description": "Label of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.group": {
+    "defaultMessage": "Players",
+    "description": "Group heading of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.params.mode.displayName": {
+    "defaultMessage": "Game mode",
+    "description": "Label of parameter mode of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.params.mode.options.adventure": {
+    "defaultMessage": "adventure",
+    "description": "Choice \"adventure\" of parameter mode of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.params.mode.options.creative": {
+    "defaultMessage": "creative",
+    "description": "Choice \"creative\" of parameter mode of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.params.mode.options.spectator": {
+    "defaultMessage": "spectator",
+    "description": "Choice \"spectator\" of parameter mode of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.params.mode.options.survival": {
+    "defaultMessage": "survival",
+    "description": "Choice \"survival\" of parameter mode of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-gamemode.params.player.displayName": {
+    "defaultMessage": "Player name",
+    "description": "Label of parameter player of server action set-gamemode (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.displayName": {
+    "defaultMessage": "Set time",
+    "description": "Label of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.displayName": {
+    "defaultMessage": "Time of day",
+    "description": "Label of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.options.day": {
+    "defaultMessage": "day",
+    "description": "Choice \"day\" of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.options.midnight": {
+    "defaultMessage": "midnight",
+    "description": "Choice \"midnight\" of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.options.night": {
+    "defaultMessage": "night",
+    "description": "Choice \"night\" of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.options.noon": {
+    "defaultMessage": "noon",
+    "description": "Choice \"noon\" of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-weather.displayName": {
+    "defaultMessage": "Set weather",
+    "description": "Label of server action set-weather (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-weather.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action set-weather (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-weather.params.weather.displayName": {
+    "defaultMessage": "Weather",
+    "description": "Label of parameter weather of server action set-weather (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-weather.params.weather.options.clear": {
+    "defaultMessage": "clear",
+    "description": "Choice \"clear\" of parameter weather of server action set-weather (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-weather.params.weather.options.rain": {
+    "defaultMessage": "rain",
+    "description": "Choice \"rain\" of parameter weather of server action set-weather (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-weather.params.weather.options.thunder": {
+    "defaultMessage": "thunder",
+    "description": "Choice \"thunder\" of parameter weather of server action set-weather (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-daylight-cycle.description": {
+    "defaultMessage": "Freeze or resume the day/night cycle.",
+    "description": "Help text of server action toggle-daylight-cycle (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-daylight-cycle.displayName": {
+    "defaultMessage": "Toggle daylight cycle",
+    "description": "Label of server action toggle-daylight-cycle (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-daylight-cycle.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action toggle-daylight-cycle (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-daylight-cycle.params.value.displayName": {
+    "defaultMessage": "Daylight cycle",
+    "description": "Label of parameter value of server action toggle-daylight-cycle (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-daylight-cycle.params.value.options.false": {
+    "defaultMessage": "false",
+    "description": "Choice \"false\" of parameter value of server action toggle-daylight-cycle (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-daylight-cycle.params.value.options.true": {
+    "defaultMessage": "true",
+    "description": "Choice \"true\" of parameter value of server action toggle-daylight-cycle (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-keep-inventory.description": {
+    "defaultMessage": "Whether players keep their items on death.",
+    "description": "Help text of server action toggle-keep-inventory (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-keep-inventory.displayName": {
+    "defaultMessage": "Toggle keep inventory",
+    "description": "Label of server action toggle-keep-inventory (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-keep-inventory.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action toggle-keep-inventory (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-keep-inventory.params.value.displayName": {
+    "defaultMessage": "Keep inventory",
+    "description": "Label of parameter value of server action toggle-keep-inventory (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-keep-inventory.params.value.options.false": {
+    "defaultMessage": "false",
+    "description": "Choice \"false\" of parameter value of server action toggle-keep-inventory (template.yaml spec.capabilities.actions)"
+  },
+  "actions.toggle-keep-inventory.params.value.options.true": {
+    "defaultMessage": "true",
+    "description": "Choice \"true\" of parameter value of server action toggle-keep-inventory (template.yaml spec.capabilities.actions)"
+  },
+  "config.DIFFICULTY.displayName": {
+    "defaultMessage": "Difficulty",
+    "description": "Label of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.options.easy": {
+    "defaultMessage": "easy",
+    "description": "Choice \"easy\" of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.options.hard": {
+    "defaultMessage": "hard",
+    "description": "Choice \"hard\" of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.options.normal": {
+    "defaultMessage": "normal",
+    "description": "Choice \"normal\" of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.options.peaceful": {
+    "defaultMessage": "peaceful",
+    "description": "Choice \"peaceful\" of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.HARDCORE.displayName": {
+    "defaultMessage": "Hardcore mode",
+    "description": "Label of configuration field HARDCORE (template.yaml spec.configSchema)"
+  },
+  "config.INIT_MEMORY.description": {
+    "defaultMessage": "Starting heap size (-Xms), at most JVM max heap. Leave empty to match the automatic max heap (a fixed heap avoids GC resizes).",
+    "description": "Help text of configuration field INIT_MEMORY (template.yaml spec.configSchema)"
+  },
+  "config.INIT_MEMORY.displayName": {
+    "defaultMessage": "JVM initial heap",
+    "description": "Label of configuration field INIT_MEMORY (template.yaml spec.configSchema)"
+  },
+  "config.LEVEL_SEED.description": {
+    "defaultMessage": "Leave blank for a random seed.",
+    "description": "Help text of configuration field LEVEL_SEED (template.yaml spec.configSchema)"
+  },
+  "config.LEVEL_SEED.displayName": {
+    "defaultMessage": "World seed",
+    "description": "Label of configuration field LEVEL_SEED (template.yaml spec.configSchema)"
+  },
+  "config.MAX_MEMORY.description": {
+    "defaultMessage": "Java heap ceiling (-Xmx, e.g. 2G, 3072M). Leave empty to size it automatically to 75% of the container memory limit — it then tracks the limit whenever you resize the server. If you set it yourself, keep roughly 25% below the limit: the JVM needs headroom for non-heap memory, and exceeding the limit gets the server OOM-killed.",
+    "description": "Help text of configuration field MAX_MEMORY (template.yaml spec.configSchema)"
+  },
+  "config.MAX_MEMORY.displayName": {
+    "defaultMessage": "JVM max heap",
+    "description": "Label of configuration field MAX_MEMORY (template.yaml spec.configSchema)"
+  },
+  "config.MAX_PLAYERS.displayName": {
+    "defaultMessage": "Max players",
+    "description": "Label of configuration field MAX_PLAYERS (template.yaml spec.configSchema)"
+  },
+  "config.MODE.displayName": {
+    "defaultMessage": "Game mode",
+    "description": "Label of configuration field MODE (template.yaml spec.configSchema)"
+  },
+  "config.MODE.options.adventure": {
+    "defaultMessage": "adventure",
+    "description": "Choice \"adventure\" of configuration field MODE (template.yaml spec.configSchema)"
+  },
+  "config.MODE.options.creative": {
+    "defaultMessage": "creative",
+    "description": "Choice \"creative\" of configuration field MODE (template.yaml spec.configSchema)"
+  },
+  "config.MODE.options.spectator": {
+    "defaultMessage": "spectator",
+    "description": "Choice \"spectator\" of configuration field MODE (template.yaml spec.configSchema)"
+  },
+  "config.MODE.options.survival": {
+    "defaultMessage": "survival",
+    "description": "Choice \"survival\" of configuration field MODE (template.yaml spec.configSchema)"
+  },
+  "config.MOTD.description": {
+    "defaultMessage": "Server description shown in the multiplayer list.",
+    "description": "Help text of configuration field MOTD (template.yaml spec.configSchema)"
+  },
+  "config.MOTD.displayName": {
+    "defaultMessage": "MOTD",
+    "description": "Label of configuration field MOTD (template.yaml spec.configSchema)"
+  },
+  "config.ONLINE_MODE.description": {
+    "defaultMessage": "Verify players with Mojang. Disable only for offline/LAN setups.",
+    "description": "Help text of configuration field ONLINE_MODE (template.yaml spec.configSchema)"
+  },
+  "config.ONLINE_MODE.displayName": {
+    "defaultMessage": "Online mode",
+    "description": "Label of configuration field ONLINE_MODE (template.yaml spec.configSchema)"
+  },
+  "config.PVP.displayName": {
+    "defaultMessage": "PvP enabled",
+    "description": "Label of configuration field PVP (template.yaml spec.configSchema)"
+  },
+  "config.VIEW_DISTANCE.displayName": {
+    "defaultMessage": "View distance (chunks)",
+    "description": "Label of configuration field VIEW_DISTANCE (template.yaml spec.configSchema)"
+  },
+  "config.WHITELIST_ENABLED.displayName": {
+    "defaultMessage": "Enforce whitelist",
+    "description": "Label of configuration field WHITELIST_ENABLED (template.yaml spec.configSchema)"
+  },
+  "metrics.difficulty.displayName": {
+    "defaultMessage": "Difficulty",
+    "description": "Label of status metric difficulty (template.yaml spec.capabilities.status.metrics)"
+  },
+  "metrics.seed.displayName": {
+    "defaultMessage": "World seed",
+    "description": "Label of status metric seed (template.yaml spec.capabilities.status.metrics)"
+  },
+  "mods.bukkit.displayName": {
+    "defaultMessage": "Plugins (Bukkit)",
+    "description": "Label of the mod volume bukkit in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "mods.fabric.displayName": {
+    "defaultMessage": "Mods (Fabric)",
+    "description": "Label of the mod volume fabric in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "mods.forge.displayName": {
+    "defaultMessage": "Mods (Forge)",
+    "description": "Label of the mod volume forge in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "mods.neoforge.displayName": {
+    "defaultMessage": "Mods (NeoForge)",
+    "description": "Label of the mod volume neoforge in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "mods.paper.displayName": {
+    "defaultMessage": "Plugins (Paper)",
+    "description": "Label of the mod volume paper in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "mods.purpur.displayName": {
+    "defaultMessage": "Plugins (Purpur)",
+    "description": "Label of the mod volume purpur in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "mods.quilt.displayName": {
+    "defaultMessage": "Mods (Quilt)",
+    "description": "Label of the mod volume quilt in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "mods.spigot.displayName": {
+    "defaultMessage": "Plugins (Spigot)",
+    "description": "Label of the mod volume spigot in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "module.displayName": {
+    "defaultMessage": "Minecraft (Java Edition)",
+    "description": "Display name of the module (module.yaml displayName)"
+  },
+  "module.summary": {
+    "defaultMessage": "Vanilla / Paper / Spigot / Bukkit / Purpur / Forge / NeoForge / Fabric / Quilt servers (itzg/minecraft-server) with a version+loader picker spanning 1.16.5–latest, per-loader mod volumes, and in-app Modrinth browse.",
+    "description": "One-line summary of the module (module.yaml summary)"
+  },
+  "template.description": {
+    "defaultMessage": "Vanilla, Paper, Spigot, Bukkit, Purpur, Forge, NeoForge, Fabric, or Quilt\nMinecraft: Java Edition servers using the community\n[itzg/minecraft-server](https://github.com/itzg/docker-minecraft-server)\nimage. Pick a version+loader in the New Server wizard; each loader''s\nmods/plugins live on their own volume so switching never clobbers another.\n",
+    "description": "Description of the game template (template.yaml spec.description)"
+  },
+  "template.displayName": {
+    "defaultMessage": "Minecraft (Java Edition)",
+    "description": "Display name of the game template (template.yaml spec.displayName)"
+  },
+  "versions.1~116~15-forge.displayName": {
+    "defaultMessage": "1.16.5 · Forge",
+    "description": "Label of game version 1.16.5-forge in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~116~15-paper.displayName": {
+    "defaultMessage": "1.16.5 · Paper",
+    "description": "Label of game version 1.16.5-paper in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~118~12-forge.displayName": {
+    "defaultMessage": "1.18.2 · Forge",
+    "description": "Label of game version 1.18.2-forge in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~118~12-paper.displayName": {
+    "defaultMessage": "1.18.2 · Paper",
+    "description": "Label of game version 1.18.2-paper in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~119~14-forge.displayName": {
+    "defaultMessage": "1.19.4 · Forge",
+    "description": "Label of game version 1.19.4-forge in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~119~14-paper.displayName": {
+    "defaultMessage": "1.19.4 · Paper",
+    "description": "Label of game version 1.19.4-paper in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~120~11-fabric.displayName": {
+    "defaultMessage": "1.20.1 · Fabric",
+    "description": "Label of game version 1.20.1-fabric in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~120~11-forge.displayName": {
+    "defaultMessage": "1.20.1 · Forge",
+    "description": "Label of game version 1.20.1-forge in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~120~11-paper.displayName": {
+    "defaultMessage": "1.20.1 · Paper",
+    "description": "Label of game version 1.20.1-paper in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~120~14-fabric.displayName": {
+    "defaultMessage": "1.20.4 · Fabric",
+    "description": "Label of game version 1.20.4-fabric in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~120~14-forge.displayName": {
+    "defaultMessage": "1.20.4 · Forge",
+    "description": "Label of game version 1.20.4-forge in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~120~14-paper.displayName": {
+    "defaultMessage": "1.20.4 · Paper",
+    "description": "Label of game version 1.20.4-paper in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~11-fabric.displayName": {
+    "defaultMessage": "1.21.1 · Fabric",
+    "description": "Label of game version 1.21.1-fabric in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~11-neoforge.displayName": {
+    "defaultMessage": "1.21.1 · NeoForge",
+    "description": "Label of game version 1.21.1-neoforge in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~11-paper.displayName": {
+    "defaultMessage": "1.21.1 · Paper",
+    "description": "Label of game version 1.21.1-paper in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~11-vanilla.displayName": {
+    "defaultMessage": "1.21.1 · Vanilla",
+    "description": "Label of game version 1.21.1-vanilla in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~14-fabric.displayName": {
+    "defaultMessage": "1.21.4 · Fabric",
+    "description": "Label of game version 1.21.4-fabric in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~14-forge.displayName": {
+    "defaultMessage": "1.21.4 · Forge",
+    "description": "Label of game version 1.21.4-forge in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~14-neoforge.displayName": {
+    "defaultMessage": "1.21.4 · NeoForge",
+    "description": "Label of game version 1.21.4-neoforge in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~14-paper.displayName": {
+    "defaultMessage": "1.21.4 · Paper",
+    "description": "Label of game version 1.21.4-paper in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~14-purpur.displayName": {
+    "defaultMessage": "1.21.4 · Purpur",
+    "description": "Label of game version 1.21.4-purpur in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~14-quilt.displayName": {
+    "defaultMessage": "1.21.4 · Quilt",
+    "description": "Label of game version 1.21.4-quilt in the version picker (template.yaml spec.versions)"
+  },
+  "versions.1~121~14-vanilla.displayName": {
+    "defaultMessage": "1.21.4 · Vanilla",
+    "description": "Label of game version 1.21.4-vanilla in the version picker (template.yaml spec.versions)"
+  },
+  "versions.latest-fabric.displayName": {
+    "defaultMessage": "Latest · Fabric",
+    "description": "Label of game version latest-fabric in the version picker (template.yaml spec.versions)"
+  },
+  "versions.latest-paper.displayName": {
+    "defaultMessage": "Latest · Paper",
+    "description": "Label of game version latest-paper in the version picker (template.yaml spec.versions)"
+  },
+  "versions.latest-vanilla.displayName": {
+    "defaultMessage": "Latest · Vanilla",
+    "description": "Label of game version latest-vanilla in the version picker (template.yaml spec.versions)"
+  }
+}
