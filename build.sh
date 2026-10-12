@@ -11,6 +11,11 @@
 #   modules/build.sh push --registry localhost:5001 --name minecraft-java --insecure
 #   modules/build.sh push --registry $REG --plain-http   # all modules, plain-http
 #
+# Translations: every <name>/locales/<tag>.json except en.json is pushed as an
+# extra layer (media type application/vnd.gameplane.module.locale.v1+json,
+# file name annotation locales/<tag>.json). en.json is the generated English
+# reference and is never shipped. Bundles without locales are unchanged.
+#
 # Required: oras >= 1.2.0  (https://oras.land/docs/installation)
 # For --sign: cosign >= 2.0  (https://docs.sigstore.dev/cosign/installation)
 #   Signing stays on cosign's classic signature format
@@ -25,6 +30,7 @@ MEDIA_METADATA="application/vnd.gameplane.module.metadata.v1+yaml"
 MEDIA_TEMPLATE="application/vnd.gameplane.module.template.v1+yaml"
 MEDIA_README="application/vnd.gameplane.module.readme.v1+md"
 MEDIA_ICON="image/png"
+MEDIA_LOCALE="application/vnd.gameplane.module.locale.v1+json"
 
 usage() {
   cat <<USAGE
@@ -148,6 +154,15 @@ push_one() {
   local layer_args=( "module.yaml:$MEDIA_METADATA" "template.yaml:$MEDIA_TEMPLATE" )
   [[ -f "$dir/README.md" ]] && layer_args+=( "README.md:$MEDIA_README" )
   [[ -f "$dir/icon.png"  ]] && layer_args+=( "icon.png:$MEDIA_ICON"   )
+
+  # One layer per translation file; the relative path keeps the
+  # "locales/<tag>.json" title annotation. en.json is never shipped.
+  local loc
+  for loc in "$dir"/locales/*.json; do
+    [[ -f "$loc" ]] || continue
+    [[ "$(basename "$loc")" == "en.json" ]] && continue
+    layer_args+=( "locales/$(basename "$loc"):$MEDIA_LOCALE" )
+  done
 
   # Capture combined output so we can recover the pushed manifest digest
   # for signing; still echo it so the push stays visible in CI logs.

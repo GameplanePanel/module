@@ -39,6 +39,23 @@ jobs:
       - name: Run module preflight validator
         run: python3 validate.py
 
+      # Needs GameplanePanel/Gameplane PR #668 (i18n-check --module) merged
+      # into master first; until then this step cannot resolve the tool.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+
+      - name: Check module locales
+        run: |
+          set -euo pipefail
+          for dir in */; do
+            dir="${dir%/}"
+            [ -d "$dir/locales" ] || continue
+            echo ">> i18n-check $dir"
+            go run github.com/GameplanePanel/gameplane/i18n/cmd/i18n-check@master \
+              --module "$dir/template.yaml" "$dir/locales"
+          done
+
       # build.sh's --sign path only ever executes in the release/republish
       # workflows, so a mistake in the manifest-digest parser would sign the
       # wrong object in production with nothing to catch it. These tests need
