@@ -49,8 +49,6 @@ jobs:
       - name: Test validate.py directory layout rules
         run: ./test-validate-py.sh
 
-      # Needs GameplanePanel/Gameplane PR #668 (i18n-check --module) merged
-      # into master first; until then this step cannot resolve the tool.
       - uses: actions/setup-go@v5
         with:
           go-version: "1.26"
