@@ -1,0 +1,278 @@
+{
+  "actions.ban-player.description": {
+    "defaultMessage": "Disconnect and ban a player.",
+    "description": "Help text of server action ban-player (template.yaml spec.capabilities.actions)"
+  },
+  "actions.ban-player.displayName": {
+    "defaultMessage": "Ban player",
+    "description": "Label of server action ban-player (template.yaml spec.capabilities.actions)"
+  },
+  "actions.ban-player.group": {
+    "defaultMessage": "Players",
+    "description": "Group heading of server action ban-player (template.yaml spec.capabilities.actions)"
+  },
+  "actions.ban-player.params.player.displayName": {
+    "defaultMessage": "Player name",
+    "description": "Label of parameter player of server action ban-player (template.yaml spec.capabilities.actions)"
+  },
+  "actions.broadcast.displayName": {
+    "defaultMessage": "Broadcast message",
+    "description": "Label of server action broadcast (template.yaml spec.capabilities.actions)"
+  },
+  "actions.broadcast.group": {
+    "defaultMessage": "Server",
+    "description": "Group heading of server action broadcast (template.yaml spec.capabilities.actions)"
+  },
+  "actions.broadcast.params.message.displayName": {
+    "defaultMessage": "Message",
+    "description": "Label of parameter message of server action broadcast (template.yaml spec.capabilities.actions)"
+  },
+  "actions.kick-player.description": {
+    "defaultMessage": "Disconnect a player from the server.",
+    "description": "Help text of server action kick-player (template.yaml spec.capabilities.actions)"
+  },
+  "actions.kick-player.displayName": {
+    "defaultMessage": "Kick player",
+    "description": "Label of server action kick-player (template.yaml spec.capabilities.actions)"
+  },
+  "actions.kick-player.group": {
+    "defaultMessage": "Players",
+    "description": "Group heading of server action kick-player (template.yaml spec.capabilities.actions)"
+  },
+  "actions.kick-player.params.player.displayName": {
+    "defaultMessage": "Player name",
+    "description": "Label of parameter player of server action kick-player (template.yaml spec.capabilities.actions)"
+  },
+  "actions.save-world.displayName": {
+    "defaultMessage": "Save world",
+    "description": "Label of server action save-world (template.yaml spec.capabilities.actions)"
+  },
+  "actions.save-world.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action save-world (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-motd.displayName": {
+    "defaultMessage": "Set MOTD",
+    "description": "Label of server action set-motd (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-motd.group": {
+    "defaultMessage": "Server",
+    "description": "Group heading of server action set-motd (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-motd.params.message.displayName": {
+    "defaultMessage": "Message",
+    "description": "Label of parameter message of server action set-motd (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.displayName": {
+    "defaultMessage": "Set time",
+    "description": "Label of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.displayName": {
+    "defaultMessage": "Time of day",
+    "description": "Label of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.options.dawn": {
+    "defaultMessage": "dawn",
+    "description": "Choice \"dawn\" of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.options.dusk": {
+    "defaultMessage": "dusk",
+    "description": "Choice \"dusk\" of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.options.midnight": {
+    "defaultMessage": "midnight",
+    "description": "Choice \"midnight\" of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.set-time.params.time.options.noon": {
+    "defaultMessage": "noon",
+    "description": "Choice \"noon\" of parameter time of server action set-time (template.yaml spec.capabilities.actions)"
+  },
+  "actions.settle-water.description": {
+    "defaultMessage": "Settle all flowing liquids.",
+    "description": "Help text of server action settle-water (template.yaml spec.capabilities.actions)"
+  },
+  "actions.settle-water.displayName": {
+    "defaultMessage": "Settle water",
+    "description": "Label of server action settle-water (template.yaml spec.capabilities.actions)"
+  },
+  "actions.settle-water.group": {
+    "defaultMessage": "World",
+    "description": "Group heading of server action settle-water (template.yaml spec.capabilities.actions)"
+  },
+  "config.AUTOCREATE.description": {
+    "defaultMessage": "World size to generate if the world doesn''t exist. 1 small, 2 medium, 3 large.",
+    "description": "Help text of configuration field AUTOCREATE (template.yaml spec.configSchema)"
+  },
+  "config.AUTOCREATE.displayName": {
+    "defaultMessage": "World size",
+    "description": "Label of configuration field AUTOCREATE (template.yaml spec.configSchema)"
+  },
+  "config.AUTOCREATE.options.1": {
+    "defaultMessage": "1",
+    "description": "Choice \"1\" of configuration field AUTOCREATE (template.yaml spec.configSchema)"
+  },
+  "config.AUTOCREATE.options.2": {
+    "defaultMessage": "2",
+    "description": "Choice \"2\" of configuration field AUTOCREATE (template.yaml spec.configSchema)"
+  },
+  "config.AUTOCREATE.options.3": {
+    "defaultMessage": "3",
+    "description": "Choice \"3\" of configuration field AUTOCREATE (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.description": {
+    "defaultMessage": "0 classic, 1 expert, 2 master, 3 journey.",
+    "description": "Help text of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.displayName": {
+    "defaultMessage": "Difficulty",
+    "description": "Label of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.options.0": {
+    "defaultMessage": "0",
+    "description": "Choice \"0\" of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.options.1": {
+    "defaultMessage": "1",
+    "description": "Choice \"1\" of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.options.2": {
+    "defaultMessage": "2",
+    "description": "Choice \"2\" of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.DIFFICULTY.options.3": {
+    "defaultMessage": "3",
+    "description": "Choice \"3\" of configuration field DIFFICULTY (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.displayName": {
+    "defaultMessage": "Language",
+    "description": "Label of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.de-DE": {
+    "defaultMessage": "de-DE",
+    "description": "Choice \"de-DE\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.en-US": {
+    "defaultMessage": "en-US",
+    "description": "Choice \"en-US\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.es-ES": {
+    "defaultMessage": "es-ES",
+    "description": "Choice \"es-ES\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.fr-FR": {
+    "defaultMessage": "fr-FR",
+    "description": "Choice \"fr-FR\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.it-IT": {
+    "defaultMessage": "it-IT",
+    "description": "Choice \"it-IT\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.ja-JP": {
+    "defaultMessage": "ja-JP",
+    "description": "Choice \"ja-JP\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.pl-PL": {
+    "defaultMessage": "pl-PL",
+    "description": "Choice \"pl-PL\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.pt-BR": {
+    "defaultMessage": "pt-BR",
+    "description": "Choice \"pt-BR\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.ru-RU": {
+    "defaultMessage": "ru-RU",
+    "description": "Choice \"ru-RU\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.LANGUAGE.options.zh-Hans": {
+    "defaultMessage": "zh-Hans",
+    "description": "Choice \"zh-Hans\" of configuration field LANGUAGE (template.yaml spec.configSchema)"
+  },
+  "config.MAXPLAYERS.displayName": {
+    "defaultMessage": "Max players",
+    "description": "Label of configuration field MAXPLAYERS (template.yaml spec.configSchema)"
+  },
+  "config.MODPACK.description": {
+    "defaultMessage": "tModLoader only — a modpack folder name under ModPacks. Leave blank for the built-in empty \"vanilla\" pack.",
+    "description": "Help text of configuration field MODPACK (template.yaml spec.configSchema)"
+  },
+  "config.MODPACK.displayName": {
+    "defaultMessage": "Active modpack",
+    "description": "Label of configuration field MODPACK (template.yaml spec.configSchema)"
+  },
+  "config.MOTD.displayName": {
+    "defaultMessage": "MOTD",
+    "description": "Label of configuration field MOTD (template.yaml spec.configSchema)"
+  },
+  "config.PASSWORD.description": {
+    "defaultMessage": "Leave blank for an open server.",
+    "description": "Help text of configuration field PASSWORD (template.yaml spec.configSchema)"
+  },
+  "config.PASSWORD.displayName": {
+    "defaultMessage": "Server password",
+    "description": "Label of configuration field PASSWORD (template.yaml spec.configSchema)"
+  },
+  "config.SECURE.displayName": {
+    "defaultMessage": "Cheat protection",
+    "description": "Label of configuration field SECURE (template.yaml spec.configSchema)"
+  },
+  "config.SECURE.options.0": {
+    "defaultMessage": "0",
+    "description": "Choice \"0\" of configuration field SECURE (template.yaml spec.configSchema)"
+  },
+  "config.SECURE.options.1": {
+    "defaultMessage": "1",
+    "description": "Choice \"1\" of configuration field SECURE (template.yaml spec.configSchema)"
+  },
+  "config.SEED.description": {
+    "defaultMessage": "Used when a new world is generated. Leave blank for random.",
+    "description": "Help text of configuration field SEED (template.yaml spec.configSchema)"
+  },
+  "config.SEED.displayName": {
+    "defaultMessage": "World seed",
+    "description": "Label of configuration field SEED (template.yaml spec.configSchema)"
+  },
+  "config.WORLDNAME.displayName": {
+    "defaultMessage": "World name",
+    "description": "Label of configuration field WORLDNAME (template.yaml spec.configSchema)"
+  },
+  "mods.tmodloader.displayName": {
+    "defaultMessage": "tModLoader ModPacks",
+    "description": "Label of the mod volume tmodloader in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "module.displayName": {
+    "defaultMessage": "Terraria",
+    "description": "Display name of the module (module.yaml displayName)"
+  },
+  "module.summary": {
+    "defaultMessage": "Terraria + tModLoader dedicated server (passivelemon/terraria-docker) with a vanilla/tModLoader version picker and a tModLoader ModPacks volume. Console via container stdin.",
+    "description": "One-line summary of the module (module.yaml summary)"
+  },
+  "template.description": {
+    "defaultMessage": "Terraria + tModLoader dedicated server using\n[passivelemon/terraria-docker](https://github.com/PassiveLemon/terraria-docker).\nChoose vanilla or tModLoader (and the build) in the wizard — the choice\nmaps to an image tag. tModLoader modpacks are managed from the Mods tab.\nConsole attaches to container stdin (pty); no RCON.\n",
+    "description": "Description of the game template (template.yaml spec.description)"
+  },
+  "template.displayName": {
+    "defaultMessage": "Terraria",
+    "description": "Display name of the game template (template.yaml spec.displayName)"
+  },
+  "versions.tmodloader-2026.displayName": {
+    "defaultMessage": "tModLoader · 2026 stable",
+    "description": "Label of game version tmodloader-2026 in the version picker (template.yaml spec.versions)"
+  },
+  "versions.tmodloader-latest.displayName": {
+    "defaultMessage": "tModLoader · latest",
+    "description": "Label of game version tmodloader-latest in the version picker (template.yaml spec.versions)"
+  },
+  "versions.tmodloader-preview.displayName": {
+    "defaultMessage": "tModLoader · latest preview",
+    "description": "Label of game version tmodloader-preview in the version picker (template.yaml spec.versions)"
+  },
+  "versions.vanilla-latest.displayName": {
+    "defaultMessage": "Vanilla · latest",
+    "description": "Label of game version vanilla-latest in the version picker (template.yaml spec.versions)"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "config.BACKUPS.description": {
+    "defaultMessage": "lloesche image also rolls backups. The Gameplane Backup CRD is the preferred path; leave off.",
+    "description": "Help text of configuration field BACKUPS (template.yaml spec.configSchema)"
+  },
+  "config.BACKUPS.displayName": {
+    "defaultMessage": "In-container backups",
+    "description": "Label of configuration field BACKUPS (template.yaml spec.configSchema)"
+  },
+  "config.BEPINEX.description": {
+    "defaultMessage": "Turn on the BepInEx mod loader. Required to use the Mods tab.",
+    "description": "Help text of configuration field BEPINEX (template.yaml spec.configSchema)"
+  },
+  "config.BEPINEX.displayName": {
+    "defaultMessage": "Enable BepInEx mods",
+    "description": "Label of configuration field BEPINEX (template.yaml spec.configSchema)"
+  },
+  "config.SERVER_NAME.displayName": {
+    "defaultMessage": "Server name",
+    "description": "Label of configuration field SERVER_NAME (template.yaml spec.configSchema)"
+  },
+  "config.SERVER_PASS.description": {
+    "defaultMessage": "5+ characters. Required by Valheim.",
+    "description": "Help text of configuration field SERVER_PASS (template.yaml spec.configSchema)"
+  },
+  "config.SERVER_PASS.displayName": {
+    "defaultMessage": "Password",
+    "description": "Label of configuration field SERVER_PASS (template.yaml spec.configSchema)"
+  },
+  "config.SERVER_PUBLIC.displayName": {
+    "defaultMessage": "List publicly",
+    "description": "Label of configuration field SERVER_PUBLIC (template.yaml spec.configSchema)"
+  },
+  "config.UPDATE_CRON.description": {
+    "defaultMessage": "When to check Steam for a game update. Blank disables.",
+    "description": "Help text of configuration field UPDATE_CRON (template.yaml spec.configSchema)"
+  },
+  "config.UPDATE_CRON.displayName": {
+    "defaultMessage": "Auto-update cron",
+    "description": "Label of configuration field UPDATE_CRON (template.yaml spec.configSchema)"
+  },
+  "config.WORLD_NAME.displayName": {
+    "defaultMessage": "World",
+    "description": "Label of configuration field WORLD_NAME (template.yaml spec.configSchema)"
+  },
+  "mods.bepinex.displayName": {
+    "defaultMessage": "BepInEx plugins",
+    "description": "Label of the mod volume bepinex in the Mods tab (template.yaml spec.capabilities.mods.loaders)"
+  },
+  "module.displayName": {
+    "defaultMessage": "Valheim (Dedicated)",
+    "description": "Display name of the module (module.yaml displayName)"
+  },
+  "module.summary": {
+    "defaultMessage": "Valheim dedicated server (lloesche/valheim-server) with a stable/public-test channel picker, a BepInEx mod volume, and in-app Thunderstore browse. Crossplay-friendly.",
+    "description": "One-line summary of the module (module.yaml summary)"
+  },
+  "template.description": {
+    "defaultMessage": "Valheim dedicated server using\n[lloesche/valheim-server](https://github.com/lloesche/valheim-server-docker).\nWorld persistence, password, crossplay, and BepInEx mods. Choose the\nstable or public-test channel in the New Server wizard.\n",
+    "description": "Description of the game template (template.yaml spec.description)"
+  },
+  "template.displayName": {
+    "defaultMessage": "Valheim (Dedicated)",
+    "description": "Display name of the game template (template.yaml spec.displayName)"
+  },
+  "versions.public-test.displayName": {
+    "defaultMessage": "Public Test (beta)",
+    "description": "Label of game version public-test in the version picker (template.yaml spec.versions)"
+  },
+  "versions.stable.displayName": {
+    "defaultMessage": "Stable",
+    "description": "Label of game version stable in the version picker (template.yaml spec.versions)"
+  }
+}

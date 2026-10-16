@@ -49,3 +49,17 @@ jobs:
       - name: Test validate.py directory layout rules
         run: ./test-validate-py.sh
 
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+
+      - name: Check module locales
+        run: |
+          set -euo pipefail
+          for dir in */; do
+            dir="${dir%/}"
+            [ -d "$dir/locales" ] || continue
+            echo ">> i18n-check $dir"
+            go run github.com/GameplanePanel/gameplane/i18n/cmd/i18n-check@master \
+              --module "$dir/template.yaml" "$dir/locales"
+          done
