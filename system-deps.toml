@@ -1,0 +1,15 @@
+# System dependencies for modules (spec 026). Language libraries stay in go.mod/package.json.
+
+component = "modules"
+
+[[dep]]
+name = "go"
+kind = "toolchain"
+version = "go"
+reason = "make module-validate builds bin/gp-module with go and validates every module offline (Makefile:383-391; inventory 6(a))."
+
+[[dep]]
+name = "oras"
+kind = "cli"
+version = "oras"
+reason = "modules/build.sh push needs oras >= 1.2.0 (modules/build.sh:19, :105, :170); make modules-push at Makefile:472-473."
