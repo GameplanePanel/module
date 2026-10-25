@@ -63,3 +63,20 @@ jobs:
             go run github.com/GameplanePanel/gameplane/i18n/cmd/i18n-check@master \
               --module "$dir/template.yaml" "$dir/locales"
           done
+
+  devcontainer:
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: devcontainers/ci@513af61f4de4f75d37e4438f184ba4358f0fc1ca # v0.3.1900000450
+        with:
+          push: never
+          configFile: .devcontainer/devcontainer.json
+          runCmd: bash -n build.sh && python3 -m py_compile validate.py
