@@ -13,3 +13,8 @@ name = "oras"
 kind = "cli"
 version = "oras"
 reason = "modules/build.sh push needs oras >= 1.2.0 (modules/build.sh:19, :105, :170); make modules-push at Makefile:472-473."
+
+[[dep]]
+name = "pyyaml"
+kind = "os-package"
+reason = "modules/validate.py imports yaml (validate.py:103-109); installed as the python3-yaml apt package (setup.sh step_pyyaml)."
