@@ -20,7 +20,8 @@ metadata:
 spec:
   displayName: "ARK: Survival Evolved"
   game: ark-survival-evolved
-  version: 2.0.1
+  version: 2.0.2
+  requiredNodeArchitecture: amd64
   categories: [Survival, Open World, Multiplayer, Dinosaurs]
   accentColor: "#00b2e2"
   description: |

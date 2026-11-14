@@ -16,7 +16,8 @@ metadata:
 spec:
   displayName: The Isle
   game: the-isle
-  version: 1.1.0
+  version: 1.1.1
+  requiredNodeArchitecture: amd64
   categories: [Survival, Dinosaurs, Open World, Multiplayer]
   accentColor: "#22543d"
   description: |

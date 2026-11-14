@@ -16,7 +16,8 @@ metadata:
 spec:
   displayName: "Mount & Blade II: Bannerlord"
   game: mount-and-blade-2-bannerlord
-  version: 1.1.0
+  version: 1.1.1
+  requiredNodeArchitecture: amd64
   categories: [Action, RPG, Medieval, Multiplayer]
   accentColor: "#b45309"
   description: |

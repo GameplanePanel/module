@@ -1832,6 +1832,12 @@
             }
           ]
         },
+        "requiredNodeArchitecture": {
+          "description": "RequiredNodeArchitecture is the kubernetes.io/arch label required by\nthe game executable (for example, amd64). Omit for portable templates.\nThe requirement also applies to version selections and image overrides.",
+          "maxLength": 63,
+          "pattern": "^[a-z0-9]+$",
+          "type": "string"
+        },
         "resources": {
           "description": "Resources are the default compute resources for the game container.",
           "properties": {

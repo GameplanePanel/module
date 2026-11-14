@@ -16,7 +16,8 @@ metadata:
 spec:
   displayName: Squad
   game: squad
-  version: 1.1.0
+  version: 1.1.1
+  requiredNodeArchitecture: amd64
   categories: [Shooter, Tactical, Military, Multiplayer]
   accentColor: "#2d3748"
   description: |

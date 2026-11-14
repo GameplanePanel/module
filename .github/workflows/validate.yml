@@ -39,6 +39,9 @@ jobs:
       - name: Check flush-only backup capabilities
         run: python3 test-backup-capabilities.py
 
+      - name: Check placement of amd64-only game images
+        run: python3 test-game-placement.py
+
       - name: Run module preflight validator
         run: python3 validate.py
 
