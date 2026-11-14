@@ -82,5 +82,5 @@ Backups capture the entire `/data` volume, so the game config and the ban list (
 
 ## Version
 
-- **Module version**: 1.1.0
-- **Requires Gameplane**: ≥ 0.2.0-beta.7
+- **Module version**: 1.1.1
+- **Requires Gameplane**: ≥ 0.4.1
