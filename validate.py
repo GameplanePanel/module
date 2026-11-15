@@ -878,6 +878,69 @@ def rule_rcon_protocol(spec: dict) -> list[Finding]:
     return []
 
 
+# Security settings a template can mark risky (spec.security.risky). Keep in
+# sync with SecurityRiskSpec in operator/api/v1alpha1/gametemplate_types.go.
+RISKY_SECURITY_KEYS = ("runAsUser", "runAsGroup", "fsGroup", "volumeOwnershipCheck")
+RISKY_REASON_MAX_LEN = 200
+
+
+def rule_risky_key_known(spec: dict) -> list[Finding]:
+    """spec.security.risky may only name the four overridable settings."""
+    risky = get_path(spec, "security.risky")
+    if not isinstance(risky, dict):
+        return []
+    findings: list[Finding] = []
+    for key in risky:
+        if key not in RISKY_SECURITY_KEYS:
+            findings.append(
+                Finding(
+                    ERROR,
+                    "risky-unknown-key",
+                    f"spec.security.risky.{key} is not one of "
+                    f"{'/'.join(RISKY_SECURITY_KEYS)} — only those settings can be marked risky.",
+                )
+            )
+    return findings
+
+
+def rule_risky_reason_length(spec: dict) -> list[Finding]:
+    """Each spec.security.risky.<key>.reason is at most 200 characters."""
+    risky = get_path(spec, "security.risky")
+    if not isinstance(risky, dict):
+        return []
+    findings: list[Finding] = []
+    for key, note in risky.items():
+        if not isinstance(note, dict):
+            continue
+        reason = note.get("reason")
+        if isinstance(reason, str) and len(reason) > RISKY_REASON_MAX_LEN:
+            findings.append(
+                Finding(
+                    ERROR,
+                    "risky-reason-too-long",
+                    f"spec.security.risky.{key}.reason is {len(reason)} characters; "
+                    f"the limit is {RISKY_REASON_MAX_LEN}.",
+                )
+            )
+    return findings
+
+
+def rule_ownership_check_needs_fsgroup(spec: dict) -> list[Finding]:
+    """volumeOwnershipCheck without fsGroup has no effect (warn only)."""
+    if get_path(spec, "security.volumeOwnershipCheck") is None:
+        return []
+    if get_path(spec, "security.fsGroup") is not None:
+        return []
+    return [
+        Finding(
+            WARN,
+            "ownership-check-without-fsgroup",
+            "spec.security.volumeOwnershipCheck is set but spec.security.fsGroup is not; "
+            "the ownership check has no effect without a filesystem group.",
+        )
+    ]
+
+
 def rule_mods_loaders_requires_versions(spec: dict) -> list[Finding]:
     """Rule 7: capabilities.mods.loaders needs a non-empty spec.versions."""
     mods = get_path(spec, "capabilities.mods")
@@ -1150,6 +1213,9 @@ def validate_module(spec: dict, cache: dict[str, dict], module_dir: Path | None 
         findings += rule_puid_image_needs_fsgroup(spec, cfg, ref)
 
     findings += rule_rcon_protocol(spec)
+    findings += rule_risky_key_known(spec)
+    findings += rule_risky_reason_length(spec)
+    findings += rule_ownership_check_needs_fsgroup(spec)
     findings += rule_mods_loaders_requires_versions(spec)
     findings += rule_credential_fields_must_be_password(spec)
     findings += rule_images_pinned(spec)
