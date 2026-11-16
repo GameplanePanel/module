@@ -80,6 +80,8 @@ Declared ports under `spec.ports`:
 
 - **User Matching**: Image starts as root to perform chown before dropping privileges to UID `1000`. Therefore, `runAsUser` must remain unset in `spec.security`.
 - **Filesystem Permissions**: `spec.security.fsGroup: 1000` ensures that the dropped-privilege user can write and execute files in `/palworld`.
+- **Ownership check**: `spec.security.volumeOwnershipCheck: EveryStart` keeps the kubelet re-owning every file at each start, as before the `OnlyWhenWrong` default.
+- **Risky override**: `spec.security.risky.runAsUser` carries the reason the dashboard shows before a server forces a user: the image must start as root to drop privileges.
 
 ---
 
