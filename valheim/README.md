@@ -30,6 +30,13 @@ The Mods tab's **Search registry** mode browses the
 can find and one-click install BepInEx plugins by name. **From URL** install
 remains available for anything not on Thunderstore.
 
+## Player count and idle sleep
+
+The dashboard's player count comes from Valheim's Steam server query (A2S)
+on the query port, 2457. Valheim answers it only when **List publicly**
+(`SERVER_PUBLIC`) is on, the default. With it off, the server reports no
+player count, and idle sleep never puts it to sleep.
+
 ## Logs (including install)
 
 The server installs via SteamCMD on start; that output (and all runtime

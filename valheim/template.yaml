@@ -22,7 +22,7 @@ metadata:
 spec:
   displayName: Valheim (Dedicated)
   game: valheim
-  version: 2.3.3
+  version: 2.4.0
   categories: [Survival, Co-op, Building]
   # Brand color the dashboard tints this game's icon/accents with.
   accentColor: "#d99a2b"
@@ -70,8 +70,8 @@ spec:
       cpu: "2"
       memory: 6Gi
 
-  # Valheim doesn't speak RCON — player count flows through the status HTTP
-  # endpoint, so the agent uses `protocol: none`.
+  # Valheim doesn't speak RCON, so the agent uses `protocol: none`. The
+  # player count comes from the Steam query instead (capabilities.players).
   rcon:
     protocol: none
 
@@ -108,8 +108,8 @@ spec:
       periodSeconds: 15
       failureThreshold: 10
 
-  # No RCON, so no players/quiesce/status capabilities — mods only. No
-  # actions either: despite consoleMode: pty, research confirms the Valheim
+  # No RCON, so no quiesce/status capabilities, and no player list or
+  # moderation. No actions either: despite consoleMode: pty, research confirms the Valheim
   # dedicated server binary has NO stdin command input at all — the pty
   # here only streams stdout, it never reads commands back. Admin commands
   # are in-game only, via the F5 console, so no quick action is possible.
@@ -118,6 +118,15 @@ spec:
   capabilities:
     lifecycle:
       stop: ["save"]
+    # The player count, for the dashboard and idle sleep, from the Steam
+    # server query (A2S) on the query port, the game port plus one. Valheim
+    # answers it only when it is listed publicly (SERVER_PUBLIC, on by
+    # default); a server that isn't reports no player count, so it never
+    # sleeps.
+    players:
+      query:
+        protocol: a2s
+        port: 2457
     mods:
       loaders:
         bepinex:
