@@ -36,6 +36,24 @@ one-click install a mod or plugin by name without hunting for a URL. The
 chosen file downloads through the same allowlist (Modrinth's CDN is listed).
 **From URL** install remains available for anything not on Modrinth.
 
+## Modpacks (2.13.0)
+
+The **Modpacks** tab installs a whole modpack onto a server. Modrinth,
+CurseForge and FTB packs are listed; the pack is pinned to a version and
+installed on boot by the game image, so one modpack applies per server.
+Changing the pinned version is a server update, and Gameplane adopts packs
+that were installed before version pinning existed. FTB packs are modpacks
+only and do not appear in the Mods tab.
+
+CurseForge needs an API key that the admin configures. On Minecraft 1.16.5
+and older the server uses the `java8` image, which has no built-in
+CurseForge key, so the admin must share the key with game servers for the
+CurseForge provider to appear for them. Files that CurseForge does not allow
+the server to download are listed in the Modpacks tab. Upload them to the
+server's `downloads/` folder and restart the server to finish the install.
+
+Modpacks need minimum Gameplane 0.5.0.
+
 ## JVM startup settings (2.12.0)
 
 Install the Gameplane CRDs and operator with support for `applyOnRestart`

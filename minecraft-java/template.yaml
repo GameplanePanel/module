@@ -23,7 +23,7 @@ spec:
   displayName: Minecraft (Java Edition)
   game: minecraft-java
   # Kept in lockstep with module.yaml's bundle version from 2.5.0 onward.
-  version: 2.12.0
+  version: 2.13.0
   categories: [Sandbox, Survival, Building, Modded, Creative]
   # Brand color the dashboard tints this game's icon/accents with.
   accentColor: "#5b9a3e"
@@ -733,21 +733,48 @@ spec:
       # The loader id is used verbatim as a Modrinth category facet.
       # Multiple registries; the dashboard shows a provider switch. Modrinth
       # is the default. CurseForge needs an API key (admin config) and is
-      # hidden until configured. Hangar serves Paper/Velocity plugins.
+      # hidden until configured. FTB is keyless and only offers modpacks
+      # (hidden in the Mods tab). Hangar serves Paper/Velocity plugins.
       registry:
         providers:
           - provider: modrinth
-            # Modpacks tab: installing a Modrinth modpack pins it via the
-            # itzg image's native env (TYPE=MODRINTH + MODRINTH_MODPACK=<slug>),
-            # which installs the whole pack on boot. One modpack per server.
+            # Modpacks tab: the operator renders the pack env from
+            # GameServer.spec.modpack (TYPE=MODRINTH, MODRINTH_MODPACK=<slug>,
+            # MODRINTH_VERSION=<version id>), which installs the pinned pack on
+            # boot. One modpack per server.
             modpacks:
               refEnv: MODRINTH_MODPACK
+              versionEnv: MODRINTH_VERSION
+              # The image records the installed version here; Gameplane reads it
+              # to adopt packs installed before version pinning existed.
+              adoptVersionFile: { path: .modrinth-modpack-manifest.json, field: versionId }
               env:
                 - { name: TYPE, value: MODRINTH }
           - provider: curseforge
             # 432 is Minecraft's numeric CurseForge game id (verified
             # against CurseForge's own /v1/games).
             curseforgeGameID: 432
+            # AUTO_CURSEFORGE installs the pinned pack file (CF_SLUG + CF_FILE_ID).
+            # Images tagged java8-multiarch/java8 have no built-in CurseForge key:
+            # such servers get this provider only while the admin shares the key,
+            # which Gameplane passes as CF_API_KEY from a server-owned Secret.
+            modpacks:
+              refEnv: CF_SLUG
+              versionEnv: CF_FILE_ID
+              apiKeyEnv: CF_API_KEY
+              needsKeyImageTags: [java8-multiarch, java8]
+              missingFilesPath: MODS_NEED_DOWNLOAD.txt
+              env:
+                - { name: TYPE, value: AUTO_CURSEFORGE }
+                - { name: CF_DOWNLOADS_REPO, value: /data/downloads }
+          - provider: ftb
+            # FTB packs (itzg FTBA): modpacks only, no single-mod browse.
+            modpacksOnly: true
+            modpacks:
+              refEnv: FTB_MODPACK_ID
+              versionEnv: FTB_MODPACK_VERSION_ID
+              env:
+                - { name: TYPE, value: FTBA }
           - provider: hangar
 
   probes:
