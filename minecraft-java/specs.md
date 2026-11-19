@@ -57,9 +57,9 @@ The Mods tab and the Modpacks tab read the same provider list.
 
 ## 5. CurseForge API Key Handling
 
-- The API key lives in the panel's admin config. Without it, the CurseForge provider is hidden.
+- The CurseForge API key is stored through the panel's mod registry API. Without it, the CurseForge provider is hidden.
 - Images with a built-in key (`java17` and newer) need nothing more.
-- Images without one (`java8`, `java8-multiarch`) get CurseForge packs only while the admin setting "Share the CurseForge key with game servers" is on (off by default).
+- Images without one (`java8`, `java8-multiarch`) get CurseForge packs only while key sharing is on. Sharing is opt-in (off by default) and is set through the API by adding the `gameplane.local/share-with-game-servers: "true"` annotation to the managed Secret `gameplane-modreg-curseforge`. There is no dashboard switch yet.
 - While sharing is on, the operator gives each affected server a server-owned Secret holding the admin key. The game container reads it as `CF_API_KEY` via `valueFrom.secretKeyRef`. The Secret follows key rotation and is removed when the admin key is removed or sharing is turned off.
 - The key is never written into GameServer env as plain text, into logs, or into API responses.
 

@@ -51,12 +51,15 @@ version ID (`FTB_MODPACK_VERSION_ID`).
 
 ### What admins need for CurseForge
 
-- **API key.** Store a CurseForge API key in the panel's admin config. Without
-  one, the CurseForge provider is hidden.
+- **API key.** Store the CurseForge API key through the panel's mod registry
+  API. Without one, the CurseForge provider is hidden.
 - **Minecraft 1.16.5 and older (`java8` images).** The `java8-multiarch` and
   `java8` images have no built-in CurseForge key. CurseForge packs for these
-  versions are offered only while **Share the CurseForge key with game
-  servers** is on in the admin settings (off by default). With sharing on,
+  versions are offered only while key sharing is on. Sharing is opt-in (off by
+  default) and is set through the API: add the
+  `gameplane.local/share-with-game-servers: "true"` annotation to the managed
+  Secret `gameplane-modreg-curseforge`. Until a dashboard switch exists, this
+  is the only way to turn it on. With sharing on,
   each server gets its own server-owned copy of the key, passed to the game
   container as `CF_API_KEY`. The copy follows key rotation and is removed when
   the admin key is removed or sharing is turned off. The key never appears in
