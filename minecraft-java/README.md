@@ -45,12 +45,35 @@ Changing the pinned version is a server update, and Gameplane adopts packs
 that were installed before version pinning existed. FTB packs are modpacks
 only and do not appear in the Mods tab.
 
-CurseForge needs an API key that the admin configures. On Minecraft 1.16.5
-and older the server uses the `java8` image, which has no built-in
-CurseForge key, so the admin must share the key with game servers for the
-CurseForge provider to appear for them. Files that CurseForge does not allow
-the server to download are listed in the Modpacks tab. Upload them to the
-server's `downloads/` folder and restart the server to finish the install.
+Each provider pins its pack by version: CurseForge by file ID
+(`CF_FILE_ID`), Modrinth by version ID (`MODRINTH_VERSION`) and FTB by
+version ID (`FTB_MODPACK_VERSION_ID`).
+
+### What admins need for CurseForge
+
+- **API key.** Store a CurseForge API key in the panel's admin config. Without
+  one, the CurseForge provider is hidden.
+- **Minecraft 1.16.5 and older (`java8` images).** The `java8-multiarch` and
+  `java8` images have no built-in CurseForge key. CurseForge packs for these
+  versions are offered only while **Share the CurseForge key with game
+  servers** is on in the admin settings (off by default). With sharing on,
+  each server gets its own server-owned copy of the key, passed to the game
+  container as `CF_API_KEY`. The copy follows key rotation and is removed when
+  the admin key is removed or sharing is turned off. The key never appears in
+  GameServer env as plain text, in logs, or in API responses.
+- **Images for 1.18.2 and newer** (`java17`, `java21`, `java25`) ship a
+  built-in key, so sharing is not needed for them.
+
+### Blocked downloads
+
+Some CurseForge mod authors do not allow third-party downloads. Gameplane
+lists those files in the Modpacks tab. Upload them to the server's
+`downloads/` folder (`/data/downloads`, the `CF_DOWNLOADS_REPO` path on the
+data volume), then restart the server to finish the install.
+
+### FTB
+
+FTB packs need no key. They use the `ftb` provider, which is modpacks only.
 
 Modpacks need minimum Gameplane 0.5.0.
 
