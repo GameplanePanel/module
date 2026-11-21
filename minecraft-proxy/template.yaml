@@ -1,0 +1,251 @@
+# yaml-language-server: $schema=../.schema/gametemplate.schema.json
+apiVersion: gameplane.local/v1alpha1
+kind: GameTemplate
+metadata:
+  name: minecraft-proxy
+  labels:
+    gameplane.local/module: minecraft-proxy
+spec:
+  displayName: Minecraft Proxy
+  game: minecraft-proxy
+  version: 1.0.0
+  categories: [Sandbox, Modded]
+  accentColor: "#36988e"
+  description: |
+    Route Minecraft Java players to your backend servers with Velocity,
+    Waterfall, or BungeeCord. Set the first lobby address in the wizard and
+    manage routing in Files. Each proxy type has its own plugin volume.
+
+  image: itzg/mc-proxy:2026.11.1-java25@sha256:8efdaa9d990f4c509f21b7ced003dd959060777784422fd72fdd537d613c1813
+  versions:
+    - id: velocity
+      displayName: Velocity
+      image: itzg/mc-proxy:2026.11.1-java25@sha256:8efdaa9d990f4c509f21b7ced003dd959060777784422fd72fdd537d613c1813
+      default: true
+      loader: velocity
+      env:
+        - { name: TYPE, value: VELOCITY }
+    - id: waterfall
+      displayName: Waterfall
+      image: itzg/mc-proxy:2026.11.1-java25@sha256:8efdaa9d990f4c509f21b7ced003dd959060777784422fd72fdd537d613c1813
+      loader: waterfall
+      env:
+        - { name: TYPE, value: WATERFALL }
+        - { name: WATERFALL_VERSION, value: "1.21" }
+        - { name: WATERFALL_BUILD_ID, value: "615" }
+    - id: bungeecord
+      displayName: BungeeCord
+      image: itzg/mc-proxy:2026.11.1-java25@sha256:8efdaa9d990f4c509f21b7ced003dd959060777784422fd72fdd537d613c1813
+      loader: bungeecord
+      env:
+        - { name: TYPE, value: BUNGEECORD }
+
+  security:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+  env:
+    - { name: HOME, value: /server }
+    - { name: TYPE, value: VELOCITY }
+    - { name: SERVER_PORT, value: "25565" }
+    - { name: ENABLE_RCON, value: "true" }
+    - { name: RCON_PORT, value: "25575" }
+
+  # The operator refreshes the seeds on pod startup. Copy only the active
+  # seed, so the routing file under /server stays editable in Files.
+  command: ["/bin/bash", "-ec"]
+  args:
+    - |
+      cd /server
+      umask 0007
+      case "${TYPE^^}" in
+        VELOCITY) config_file=velocity.toml ;;
+        WATERFALL|BUNGEECORD) config_file=config.yml ;;
+        *) printf 'Unsupported proxy type: %s\n' "$TYPE" >&2; exit 1 ;;
+      esac
+      if [[ ! -e "$config_file" && ! -L "$config_file" ]]; then
+        cp --update=none --no-target-directory "gameplane-defaults/$config_file" "$config_file"
+      fi
+
+      # Both Bungee-family proxies look for core modules at the data root.
+      # Resolve those paths through the active type's plugin volume.
+      if [[ "$config_file" == config.yml ]]; then
+        module_dir=plugins/.gameplane-proxy-modules
+        mkdir -p "$module_dir"
+        if [[ ! -e "$module_dir/modules.yml" && ! -L "$module_dir/modules.yml" ]]; then
+          touch "$module_dir/modules.yml"
+        fi
+        if [[ ! -e modules && ! -L modules ]]; then
+          ln --symbolic --no-target-directory "$module_dir" modules
+        fi
+        if [[ ! -e modules.yml && ! -L modules.yml ]]; then
+          ln --symbolic --no-target-directory "$module_dir/modules.yml" modules.yml
+        fi
+      fi
+
+      # Waterfall's former v2 API no longer serves the core modules. Stage
+      # the matching build from PaperMC's content-addressed artifact store.
+      if [[ "${TYPE^^}" == WATERFALL ]]; then
+        while read -r checksum module_file; do
+          if [[ -e "$module_file" || -L "$module_file" ]]; then
+            continue
+          fi
+          module_name=${module_file##*/}
+          artifact="${module_name%.jar}-${WATERFALL_VERSION}-${WATERFALL_BUILD_ID}.jar"
+          download=$(mktemp "$module_file.XXXXXX")
+          trap 'rm -f -- "$download"' EXIT
+          curl --fail --silent --show-error --location --retry 2 --connect-timeout 10 --max-time 30 \
+            --output "$download" "https://fill-data.papermc.io/v1/objects/$checksum/$artifact"
+          printf '%s  %s\n' "$checksum" "$download" | sha256sum --check
+          mv --update=none --no-target-directory "$download" "$module_file"
+          rm -f -- "$download"
+          trap - EXIT
+        done < gameplane-defaults/waterfall-modules.sha256
+        sha256sum --check --quiet gameplane-defaults/waterfall-modules.sha256
+      fi
+      exec /usr/bin/run-bungeecord.sh
+
+  ports:
+    - name: game
+      containerPort: 25565
+      protocol: TCP
+      advertise: true
+    - name: rcon
+      containerPort: 25575
+      protocol: TCP
+      advertise: false
+
+  storage:
+    size: 1Gi
+    mountPath: /server
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+  rcon:
+    protocol: source
+    port: 25575
+    passwordEnv: RCON_PASSWORD
+
+  capabilities:
+    lifecycle:
+      stop: ["end"]
+    mods:
+      loaders:
+        velocity: { displayName: Plugins (Velocity), path: plugins, extensions: [".jar"] }
+        waterfall: { displayName: Plugins (Waterfall), path: plugins, extensions: [".jar"] }
+        bungeecord: { displayName: Plugins (BungeeCord), path: plugins, extensions: [".jar"] }
+      install:
+        allowedHosts:
+          - cdn.modrinth.com
+          - hangarcdn.papermc.io
+          - github.com
+          - release-assets.githubusercontent.com
+          - objects.githubusercontent.com
+
+  probes:
+    startup:
+      exec:
+        command: ["/usr/bin/health.sh"]
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 60
+    readiness:
+      exec:
+        command: ["/usr/bin/health.sh"]
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+    liveness:
+      exec:
+        command: ["/usr/bin/health.sh"]
+      periodSeconds: 30
+      timeoutSeconds: 5
+      failureThreshold: 3
+
+  configFiles:
+    - path: gameplane-defaults/config.yml
+      template: |
+        online_mode: true
+        ip_forward: true
+        player_limit: -1
+        groups: {}
+        servers:
+          lobby:
+            address: {{printf "%q" .Values.INITIAL_BACKEND}}
+            restricted: false
+        listeners:
+          - host: "0.0.0.0:25565"
+            motd: "A Gameplane Minecraft proxy"
+            max_players: 100
+            priorities: [lobby]
+            force_default_server: true
+            forced_hosts: {}
+            query_enabled: false
+            proxy_protocol: false
+    - path: gameplane-defaults/velocity.toml
+      template: |
+        config-version = "2.7"
+        bind = "0.0.0.0:25565"
+        motd = "A Gameplane Minecraft proxy"
+        show-max-players = 100
+        online-mode = true
+        player-info-forwarding-mode = "modern"
+        forwarding-secret-file = "forwarding.secret"
+
+        [servers]
+        lobby = {{printf "%q" .Values.INITIAL_BACKEND}}
+        try = ["lobby"]
+
+        [forced-hosts]
+
+        [query]
+        enabled = false
+    - path: gameplane-defaults/waterfall-modules.sha256
+      template: |
+        17d013baf57a10001ef72b2806cdefc1e151da1ab98ffd5ed395f1eabdb0582e  modules/cmd_alert.jar
+        7cf964eaa2f2365e09751c81d11c57ca3fb6927b67d4c61f96f8a2ba58a664d6  modules/cmd_find.jar
+        995dea7f1821618059b02c4cc97e827790e028b1324add362f418a2be4897172  modules/cmd_list.jar
+        f5e0a10d6028f4835969e7731889c98f3b82e9c9d2f2981ffdb6c200d978d7df  modules/cmd_send.jar
+        d1c68f7c0469e61c83939a37abae08f8ad231fc5bb4c7f455065af42f7950710  modules/cmd_server.jar
+        5c952eac34a69e19d7667cb6ddb0c9525809e7c072ed044f8bb9ee6a76722826  modules/reconnect_yaml.jar
+
+  configSchema:
+    - name: INITIAL_BACKEND
+      displayName: Initial lobby address
+      description: >-
+        Use host:port, reachable from the proxy. This seeds the lobby when the
+        routing file is first created. Edit the live routing file in Files to
+        change backends afterward.
+      type: string
+      default: "lobby:25565"
+      required: true
+      target: file
+    - name: INIT_MEMORY
+      displayName: JVM initial heap
+      description: Starting heap, for example 128M. Keep it at or below the maximum.
+      type: string
+      default: "128M"
+      applyOnRestart: true
+    - name: MAX_MEMORY
+      displayName: JVM max heap
+      description: Heap ceiling, for example 768M. Leave empty for 75% of the container memory limit.
+      type: string
+      applyOnRestart: true
+      autoFromMemoryLimit:
+        percent: 75
+    - name: JVM_OPTS
+      displayName: Additional JVM options
+      description: Space-separated Java options, for example -Dfile.encoding=UTF-8.
+      type: string
+      applyOnRestart: true
+    - name: JVM_XX_OPTS
+      displayName: Additional JVM tuning options
+      description: Space-separated JVM tuning options, for example -XX:+PrintCommandLineFlags.
+      type: string
+      applyOnRestart: true

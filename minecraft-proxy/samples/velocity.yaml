@@ -1,0 +1,12 @@
+apiVersion: gameplane.local/v1alpha1
+kind: GameServer
+metadata:
+  name: velocity-01
+  namespace: gameplane-games
+spec:
+  templateRef:
+    name: minecraft-proxy
+  version: velocity
+  config:
+    # Replace with the private address of your first backend.
+    INITIAL_BACKEND: "lobby:25565"
