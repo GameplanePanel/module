@@ -400,7 +400,7 @@
     "description": "Display name of the module (module.yaml displayName)"
   },
   "module.summary": {
-    "defaultMessage": "Vanilla / Paper / Spigot / Bukkit / Purpur / Forge / NeoForge / Fabric / Quilt servers (itzg/minecraft-server) with a version+loader picker spanning 1.16.5–latest, per-loader mod volumes, and in-app Modrinth browse.",
+    "defaultMessage": "Vanilla / Paper / Spigot / Bukkit / Purpur / Forge / NeoForge / Fabric / Quilt servers (itzg/minecraft-server) with a version+loader picker spanning 1.16.5–latest, per-loader mod volumes, in-app Modrinth browse, and Modrinth, CurseForge and FTB modpacks.",
     "description": "One-line summary of the module (module.yaml summary)"
   },
   "template.description": {

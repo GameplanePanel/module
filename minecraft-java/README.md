@@ -36,6 +36,50 @@ one-click install a mod or plugin by name without hunting for a URL. The
 chosen file downloads through the same allowlist (Modrinth's CDN is listed).
 **From URL** install remains available for anything not on Modrinth.
 
+## Modpacks (2.13.0)
+
+The **Modpacks** tab installs a whole modpack onto a server. Modrinth,
+CurseForge and FTB packs are listed; the pack is pinned to a version and
+installed on boot by the game image, so one modpack applies per server.
+Changing the pinned version is a server update, and Gameplane adopts packs
+that were installed before version pinning existed. FTB packs are modpacks
+only and do not appear in the Mods tab.
+
+Each provider pins its pack by version: CurseForge by file ID
+(`CF_FILE_ID`), Modrinth by version ID (`MODRINTH_VERSION`) and FTB by
+version ID (`FTB_MODPACK_VERSION_ID`).
+
+### What admins need for CurseForge
+
+- **API key.** Store the CurseForge API key through the panel's mod registry
+  API. Without one, the CurseForge provider is hidden.
+- **Minecraft 1.16.5 and older (`java8` images).** The `java8-multiarch` and
+  `java8` images have no built-in CurseForge key. CurseForge packs for these
+  versions are offered only while key sharing is on. Sharing is opt-in (off by
+  default) and is set through the API: add the
+  `gameplane.local/share-with-game-servers: "true"` annotation to the managed
+  Secret `gameplane-modreg-curseforge`. Until a dashboard switch exists, this
+  is the only way to turn it on. With sharing on,
+  each server gets its own server-owned copy of the key, passed to the game
+  container as `CF_API_KEY`. The copy follows key rotation and is removed when
+  the admin key is removed or sharing is turned off. The key never appears in
+  GameServer env as plain text, in logs, or in API responses.
+- **Images for 1.18.2 and newer** (`java17`, `java21`, `java25`) ship a
+  built-in key, so sharing is not needed for them.
+
+### Blocked downloads
+
+Some CurseForge mod authors do not allow third-party downloads. Gameplane
+lists those files in the Modpacks tab. Upload them to the server's
+`downloads/` folder (`/data/downloads`, the `CF_DOWNLOADS_REPO` path on the
+data volume), then restart the server to finish the install.
+
+### FTB
+
+FTB packs need no key. They use the `ftb` provider, which is modpacks only.
+
+Modpacks need minimum Gameplane 0.5.0.
+
 ## JVM startup settings (2.12.0)
 
 Install the Gameplane CRDs and operator with support for `applyOnRestart`
