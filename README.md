@@ -4,6 +4,9 @@ OCI game templates for Gameplane. Each `<name>/` folder holds `module.yaml`,
 `template.yaml`, `README.md` and optional `icon.png`, `specs.md`, `samples/`.
 `build.sh push` publishes them; `validate.py` preflight-checks them in CI.
 
+Use the [Minecraft Proxy module](minecraft-proxy/) to route Minecraft Java
+players to backend servers through Velocity, Waterfall, or BungeeCord.
+
 ## Mixed-architecture clusters
 
 Squad, The Isle, Mount & Blade II: Bannerlord, Nuclear Option and ARK: Survival
