@@ -404,7 +404,7 @@
     "description": "One-line summary of the module (module.yaml summary)"
   },
   "template.description": {
-    "defaultMessage": "Vanilla, Paper, Spigot, Bukkit, Purpur, Forge, NeoForge, Fabric ou Quilt\nServeurs Minecraft Java Edition utilisant l’image\n[itzg/minecraft-server](https://github.com/itzg/docker-minecraft-server)\ncommunautaire. Choisissez une version+loader dans l’assistant Nouveau serveur ; les mods/plugins de chaque loader vivent sur leur propre volume, si bien que changer de loader n’écrase jamais les autres.\n",
+    "defaultMessage": "Vanilla, Paper, Spigot, Bukkit, Purpur, Forge, NeoForge, Fabric ou Quilt\nServeurs Minecraft Java Edition utilisant l’image\n[itzg/minecraft-server](https://github.com/itzg/docker-minecraft-server)\ncommunautaire. Choisissez une version+loader dans l’assistant Nouveau serveur ; les mods/plugins de chaque loader vivent sur leur propre volume, si bien que changer de loader n’écrase jamais les autres.\n",
     "description": "Description of the game template (template.yaml spec.description)"
   },
   "template.displayName": {
