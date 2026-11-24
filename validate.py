@@ -358,6 +358,16 @@ def resolve_digest(image_ref: str) -> dict[str, Any]:
                 "Docker-Content-Digest header, so there is nothing authoritative to pin to"
             ),
         }
+    # --pin writes this value verbatim into template.yaml, so a hostile or
+    # broken registry must not be able to inject arbitrary text there.
+    if not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
+        return {
+            "ok": False, "skipped": False, "network_error": False,
+            "reason": (
+                f"{image_ref}: registry returned a malformed Docker-Content-Digest "
+                f"{digest[:80]!r}; refusing to pin it"
+            ),
+        }
     return {"ok": True, "digest": digest}
 
 
