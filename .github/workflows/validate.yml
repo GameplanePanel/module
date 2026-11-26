@@ -4,7 +4,7 @@ name: validate modules
 # OCI image config of the image(s) it declares, catching the bug classes
 # that have shipped broken before (see validate.py's module docstring for
 # the full rule list and the historical bugs each one repros). Runs on
-# every PR and on pushes to main so a template change is checked before it
+# every PR and on pushes to master so a template change is checked before it
 # ever reaches a real cluster.
 #
 # Network access to Docker Hub is required (the validator resolves each
@@ -18,7 +18,7 @@ name: validate modules
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [master]
 
 permissions:
   contents: read

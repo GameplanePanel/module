@@ -5,7 +5,7 @@ name: refresh image pins
 # deliberately: it re-resolves each pinned tag to whatever digest it points at
 # today and opens a PR with the diff.
 #
-# It NEVER pushes to main and NEVER auto-merges. A pin refresh means "the game
+# It NEVER pushes to master and NEVER auto-merges. A pin refresh means "the game
 # binary changes for everyone on next restart", which is exactly the event
 # pinning exists to put a human in front of. Review the PR, and let the
 # `validate modules` workflow re-check the new digests against their OCI
@@ -106,4 +106,4 @@ jobs:
             echo '```'
           } > /tmp/body.md
           gh pr create --title "chore: refresh module image pins" \
-            --body-file /tmp/body.md --base main --head "$BRANCH"
+            --body-file /tmp/body.md --base master --head "$BRANCH"
