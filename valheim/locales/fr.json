@@ -1,6 +1,6 @@
 {
   "config.BACKUPS.description": {
-    "defaultMessage": "L’image lloesche effectue aussi des sauvegardes. Le CRD Gameplane Backup est la voie privilégiée ; laisser désactivé.",
+    "defaultMessage": "L’image lloesche effectue aussi des sauvegardes. Le CRD Gameplane Backup est la voie privilégiée ; laisser désactivé.",
     "description": "Help text of configuration field BACKUPS (template.yaml spec.configSchema)"
   },
   "config.BACKUPS.displayName": {

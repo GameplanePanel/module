@@ -196,7 +196,7 @@
     "description": "Label of configuration field MAXPLAYERS (template.yaml spec.configSchema)"
   },
   "config.MODPACK.description": {
-    "defaultMessage": "Uniquement pour tModLoader : nom d’un dossier de modpack situé dans ModPacks. Laisser vide pour le pack « vanilla » vide intégré.",
+    "defaultMessage": "Uniquement pour tModLoader : nom d’un dossier de modpack situé dans ModPacks. Laisser vide pour le pack « vanilla » vide intégré.",
     "description": "Help text of configuration field MODPACK (template.yaml spec.configSchema)"
   },
   "config.MODPACK.displayName": {
@@ -252,7 +252,7 @@
     "description": "One-line summary of the module (module.yaml summary)"
   },
   "template.description": {
-    "defaultMessage": "Serveur dédié Terraria + tModLoader utilisant\n[passivelemon/terraria-docker](https://github.com/PassiveLemon/terraria-docker).\nChoisissez vanilla ou tModLoader (et la build) dans l’assistant : le choix correspond à un tag d’image. Les modpacks tModLoader se gèrent depuis l’onglet Mods.\nLa console est rattachée à l’entrée standard du conteneur (pty) ; pas de RCON.\n",
+    "defaultMessage": "Serveur dédié Terraria + tModLoader utilisant\n[passivelemon/terraria-docker](https://github.com/PassiveLemon/terraria-docker).\nChoisissez vanilla ou tModLoader (et la build) dans l’assistant : le choix correspond à un tag d’image. Les modpacks tModLoader se gèrent depuis l’onglet Mods.\nLa console est rattachée à l’entrée standard du conteneur (pty) ; pas de RCON.\n",
     "description": "Description of the game template (template.yaml spec.description)"
   },
   "template.displayName": {
