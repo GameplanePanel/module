@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../.schema/gametemplate.schema.json
 # Gameplane GameTemplate for Euro Truck Simulator 2 (dedicated server).
 #
-# Backed by Gameplane-owned ETS2 container with non-crashing diagnostic idle
+# Backed by Gameplane-owned ETS2 container (SteamCMD base) that installs the
+# dedicated server into the volume at start, with non-crashing diagnostic idle
 # when the server logon token is missing (FR-013).
 #
 # Cluster-scoped; apply once per cluster:
@@ -21,19 +22,20 @@ spec:
   accentColor: "#3b82f6"
   description: |
     Euro Truck Simulator 2 dedicated convoy server. Interactive console
-    connects via container PTY stdin/stdout. Server state and configs persist
-    under the user profile directory.
+    connects via container PTY stdin/stdout. The dedicated server (Steam app
+    1948160) is installed into the `/data` volume at start; the convoy profile
+    persists under `/data/profile`.
 
-  image: ghcr.io/gameplanepanel/gameplane/euro-truck-simulator-2:latest@sha256:170562b495bca0535830ada89d9d01b52d94e79c99a2354b2cffcb72103a19f5
+  image: ghcr.io/gameplanepanel/gameplane/euro-truck-simulator-2:latest@sha256:3296f2b444b1924933256e7e965ab96ba737c514542064db6a634759869e5e6d
 
   env:
-    - name: HOME
-      value: /home/gameplane
+    - name: GP_DATA_DIR
+      value: /data
 
   security:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
+    runAsUser: 10000
+    runAsGroup: 10000
+    fsGroup: 10000
 
   ports:
     - name: game
@@ -47,7 +49,7 @@ spec:
 
   storage:
     size: 10Gi
-    mountPath: /home/steam/.local/share/Euro Truck Simulator 2
+    mountPath: /data
 
   resources:
     requests: {cpu: "1", memory: 2Gi}
@@ -58,6 +60,24 @@ spec:
 
   consoleMode: pty
 
+  probes:
+    startup:
+      # Ready once the game UDP socket is bound (27015 = 0x6987, state 07).
+      # First start downloads the server through SteamCMD, so allow ~30 min.
+      # The entrypoint touches /tmp/gp-diagnostic-idle while idling without a
+      # logon token (FR-013) so the accepted idle is not restarted. Readiness
+      # below does not accept the marker: an idle pod is never Ready.
+      exec:
+        command: ["sh", "-c", "[ -f /tmp/gp-diagnostic-idle ] || grep -qsE ':6987 [0-9A-F:]+ 07' /proc/net/udp /proc/net/udp6"]
+      initialDelaySeconds: 60
+      periodSeconds: 15
+      failureThreshold: 120
+    readiness:
+      exec:
+        command: ["sh", "-c", "grep -qsE ':6987 [0-9A-F:]+ 07' /proc/net/udp /proc/net/udp6"]
+      periodSeconds: 10
+      failureThreshold: 6
+
   capabilities:
     lifecycle:
       stop: ["exit"]
@@ -65,7 +85,7 @@ spec:
   configSchema:
     - name: SERVER_LOGON_TOKEN
       displayName: Server Logon Token
-      description: Steam Game Server Logon Token for ETS2 (App ID 1948400) from steamcommunity.com/dev/managegameservers.
+      description: Steam Game Server Logon Token for ETS2 (App ID 227300) from steamcommunity.com/dev/managegameservers.
       type: password
       required: true
       default: ""

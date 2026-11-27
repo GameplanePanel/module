@@ -14,6 +14,10 @@ A **CitizenFX server license key** is required for FiveM to start. Register a se
 
 If the license key is missing, the entrypoint enters a **graceful diagnostic idle** mode (FR-013) that prints instructions to the container log without crash-looping.
 
+## FXServer install
+
+The image does not bundle FXServer. On first start the entrypoint downloads a pinned artifact (build 38435, `runtime.fivem.net`) into `/server-data/fxserver`, verifies its sha256 and extracts it. Override `FXSERVER_URL` and `FXSERVER_SHA256` together to use another build. A download, checksum or extract failure exits the container non-zero with the reason in the log.
+
 ## Management & Remote Console (RCON)
 
 Administration is driven through txAdmin's HTTP API (`rcon.protocol: rest`) listening on internal port 40120. Gameplane's agent connects directly to the REST API to execute console commands, broadcasts, and graceful shutdowns.

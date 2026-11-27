@@ -11,10 +11,10 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/gameplanepanel/gameplane/farming-simulator-25:latest@sha256:a19a825612a2a77b5a27224bcd4c3362e604ec4b962d4f77e1cbb22c71f2773f`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/farming-simulator-25:latest@sha256:4c88775823e48e1f20d8357d57c513edf777e1d7e8815716fa7421c7e47a2e76`
 - **Architecture**: `linux/amd64`
 - **Runtime Model**: Headless Wine and dummy X11 (Xvfb) supervising the GIANTS dedicated server and web admin portal in a single-pod architecture (FR-012).
-- **User & Execution Context**: UID `1000`, GID `1000`, working directory `/serverdata`.
+- **User & Execution Context**: UID `1000`, GID `1000`, working directory is the mounted volume `/data/My Games/FarmingSimulator2025` (`GP_DATA_DIR`), where the user uploads the server files (`FarmingSimulator2025.exe`, `dedicatedServer.exe`). The entrypoint exits non-zero when they are missing.
 
 ---
 
@@ -35,9 +35,10 @@ Declared ports under `spec.ports`:
 - **Default Sizing**: `20Gi`
 - **Persisted Content**:
   - Farm progress, terrain modifications, and career saves (`savegame*`)
+  - Uploaded server files (`FarmingSimulator2025.exe`, `dedicatedServer.exe`)
   - Server configuration files (`dedicated_server/`)
   - Downloaded mods and DLCs (`mods/`)
-- **Non-Shadowing Invariant**: The mount path resides in `/data/My Games/FarmingSimulator2025` which is isolated from the container wineprefix and entrypoint scripts.
+- **Non-Shadowing Invariant**: The mount path resides in `/data/My Games/FarmingSimulator2025` which is isolated from the container wineprefix and entrypoint scripts; the entrypoint looks for the server executables inside this volume.
 
 ---
 

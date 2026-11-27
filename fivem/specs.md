@@ -11,7 +11,7 @@
 
 ## 2. Container Image & Architecture
 
-- **Base Image**: `ghcr.io/gameplanepanel/gameplane/fivem:latest@sha256:23d65f59793e5f207c4c4ee5c320bca5aa56003fd95be259a887f4e58f3d77b1`
+- **Base Image**: `ghcr.io/gameplanepanel/gameplane/fivem:latest@sha256:4ae111599ac8fc51368091810550f824692bc8cdb646ae28a9f00d1eaa42d6d4`
 - **Architecture**: `linux/amd64`
 - **Runtime Model**: CitizenFX server supervised alongside embedded MariaDB and txAdmin in a single-pod architecture (FR-012).
 - **User & Execution Context**: UID `1000`, GID `1000`, working directory `/server-data`.
@@ -39,7 +39,7 @@ Declared ports under `spec.ports`:
   - Server configuration files (`server.cfg`)
   - Embedded MariaDB relational data (`mysql/`)
   - Custom resources, scripts, and assets (`resources/`)
-- **Non-Shadowing Invariant**: The mount path `/server-data` hosts the writable server assets and state without overriding `/opt/cfx-server` or system binaries.
+- **Non-Shadowing Invariant**: The mount path `/server-data` hosts the writable server assets and state without overriding system binaries; FXServer is downloaded (pinned build, sha256-verified) into `/server-data/fxserver` at start and the entrypoint exits non-zero if it is still missing.
 
 ---
 

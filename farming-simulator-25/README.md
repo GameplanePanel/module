@@ -14,6 +14,10 @@ Farming Simulator dedicated servers do not expose an interactive stdin console o
 
 Gameplane's agent communicates directly with the portal's HTTP endpoints (`rcon.protocol: rest`) to query server status and trigger game saves prior to shutdown.
 
+## Server files (upload required)
+
+Gameplane cannot download the Windows dedicated server. Before the first start, upload your licensed Farming Simulator 25 server install (`FarmingSimulator2025.exe`, `dedicatedServer.exe` and the game data) into the server's volume with the Files tab or SFTP; the volume root is `/data/My Games/FarmingSimulator2025`. If neither executable is found the container logs these instructions and exits non-zero.
+
 ## Ports
 
 | Name | Port | Protocol | Advertised | Purpose |
