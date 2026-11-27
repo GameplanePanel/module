@@ -119,7 +119,7 @@ MODULES_DIR="$(cd "$(dirname "$0")" && pwd)"
 # colons in the fields we read).
 ymv() {
   local file="$1" key="$2"
-  awk -v k="^$key:" 'BEGIN{IGNORECASE=0} $0 ~ k {sub(/^[^:]+:[ \t]*/, ""); gsub(/^["'"'"']|["'"'"']$/, ""); print; exit}' "$file"
+  awk -v k="^$key:" '$0 ~ k {sub(/^[^:]+:[ \t]*/, ""); gsub(/^["'"'"']|["'"'"']$/, ""); print; exit}' "$file"
 }
 
 push_one() {
