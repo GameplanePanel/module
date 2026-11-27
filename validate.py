@@ -1400,16 +1400,10 @@ Options:
         if not gp_bin:
             sys.stderr.write("error: gp-module binary not found; required for --offline validation\n")
             return 2
-        cmd = [gp_bin, "validate"]
-        if "--json" in args:
-            cmd.append("--json")
-        if "--strict" in args:
-            cmd.append("--strict")
-        cmd.extend([str(d) for d in module_dirs])
-        return subprocess.run(cmd).returncode
+        return subprocess.run([gp_bin, "validate"] + [str(d) for d in module_dirs]).returncode
 
     offline_findings: dict[str, list[Finding]] = {}
-    if gp_bin and "--skip-offline" not in args:
+    if gp_bin:
         try:
             res = subprocess.run(
                 [gp_bin, "validate", "--json"] + [str(d) for d in module_dirs],
