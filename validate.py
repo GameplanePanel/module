@@ -94,6 +94,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -567,10 +568,8 @@ def _steamcmd_shaped(cfg: dict) -> bool:
         key = e.split("=", 1)[0].upper()
         if "STEAM" in key:
             return True
-    for field in ("WorkingDir",):
-        v = (cfg.get(field) or "").lower()
-        if "steamcmd" in v:
-            return True
+    if "steamcmd" in (cfg.get("WorkingDir") or "").lower():
+        return True
     for lst in (cfg.get("Entrypoint") or [], cfg.get("Cmd") or []):
         for tok in lst:
             if "steamcmd" in (tok or "").lower():
@@ -600,10 +599,8 @@ def rule_no_entrypoint_shell_cmd(spec: dict, cfg: dict, image_ref: str) -> list[
     cmd = cfg.get("Cmd") or []
     if entrypoint or not cmd:
         return []
-    shell_names = {"bash", "sh", "/bin/bash", "/bin/sh"}
-    base = cmd[0] or ""
-    basename = base.rsplit("/", 1)[-1]
-    if len(cmd) == 1 and (base in shell_names or basename in ("bash", "sh")):
+    basename = (cmd[0] or "").rsplit("/", 1)[-1]
+    if len(cmd) == 1 and basename in ("bash", "sh"):
         if not spec.get("command"):
             return [
                 Finding(
@@ -651,13 +648,11 @@ def rule_nonroot_requires_runasuser(spec: dict, cfg: dict, image_ref: str) -> li
                 "Project Zomboid uid-1000-vs-10000 bug).",
             )
         ]
-    if img_uid is None:
-        # A bare name (e.g. "steam") — we cannot resolve the real numeric uid
-        # without reading /etc/passwd out of the image's filesystem layers,
-        # which this validator deliberately does not do (too expensive for a
-        # preflight check). Presence of *some* runAsUser is verified above;
-        # the exact value can't be cross-checked statically here.
-        pass
+    # img_uid is None for a bare name (e.g. "steam"): the real numeric uid
+    # cannot be resolved without reading /etc/passwd out of the image's
+    # filesystem layers, which this validator deliberately does not do (too
+    # expensive for a preflight check). Presence of *some* runAsUser is
+    # verified above; the exact value can't be cross-checked statically here.
     return []
 
 
@@ -1357,7 +1352,6 @@ def discover_modules(root: Path, names: list[str] | None) -> list[Path]:
 
 
 def find_gp_module_bin(root: Path) -> str | None:
-    import shutil
     gp_bin = shutil.which("gp-module")
     if gp_bin:
         return gp_bin
